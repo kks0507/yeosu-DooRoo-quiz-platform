@@ -767,4 +767,3 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
     </div>
   )
 }
-}
