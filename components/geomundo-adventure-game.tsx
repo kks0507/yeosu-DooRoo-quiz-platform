@@ -268,17 +268,27 @@ const gameData = [
 
 type GameScreen = "intro" | "opening" | "location" | "situation" | "quiz" | "result" | "reward" | "ending"
 
-// `onGameEnd` prop의 타입 정의를 업데이트합니다.
 interface GeomundoAdventureGameProps {
   onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
+
+const IntroHeader = () => (
+  <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+    <div className="max-w-lg mx-auto flex items-center justify-start">
+      <a href="/" className="flex items-baseline cursor-pointer no-underline">
+        <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+        <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+      </a>
+    </div>
+  </header>
+)
 
 export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string>("")
   const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false)
-  const [collectedItems, setCollectedItems] = useState<string[]>([]) // 변경된 상태: 보상 아이템 추적
+  const [collectedItems, setCollectedItems] = useState<string[]>([])
   const [gameStarted, setGameStarted] = useState(false)
 
   const currentStep = gameData[currentStepIndex]
@@ -310,12 +320,10 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
 
   const handleResultNext = () => {
     if (isCorrectAnswer) {
-      // 보상 획득 로직 (변경된 부분)
       if (currentStep.reward_text) {
         setCollectedItems((prev) => [...prev, currentStep.reward_text])
       }
 
-      // 마지막 스텝인지 확인
       if (currentStepIndex === gameData.length - 1) {
         setCurrentScreen("ending")
       } else {
@@ -337,20 +345,18 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
     setCurrentScreen("quiz")
   }
 
-  // 게임 ID와 이름 변경
   const handleRestart = () => {
     setCurrentStepIndex(0)
     setCurrentScreen("intro")
     setSelectedAnswer("")
     setIsCorrectAnswer(false)
-    setCollectedItems([]) // 상태 초기화
+    setCollectedItems([])
     setGameStarted(false)
-    onGameEnd("geomundo", "신지께의 비밀을 찾아서", "completed") // 게임 ID와 전체 이름 전달
+    onGameEnd("geomundo", "신지께의 비밀을 찾아서", "completed")
   }
 
-  // 게임 ID와 이름 변경
   const handleExitGame = () => {
-    onGameEnd("geomundo", "신지께의 비밀을 찾아서", "exited") // 게임 ID와 전체 이름 전달
+    onGameEnd("geomundo", "신지께의 비밀을 찾아서", "exited")
   }
 
   const getDifficultyColor = (difficulty: string) => {
@@ -369,9 +375,9 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-blue-200 p-4 font-sans">
-      <div className="max-w-lg mx-auto">
-        {/* 헤더와 진행률 */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-blue-200 font-sans">
+      {currentScreen === "intro" && <IntroHeader />}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === "intro" ? "pt-20" : ""}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -398,8 +404,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
                 value={progress}
                 className="h-2 bg-stone-300 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-blue-500 [&::-webkit-progress-value]:to-teal-500"
               />
-
-              {/* 수집한 단서 (변경된 부분) */}
               <div className="flex gap-3 justify-center pt-2">
                 <div className="flex items-center gap-2 text-sm text-stone-600 bg-gray-100 px-3 py-1 rounded-full">
                   <Sparkles className="w-4 h-4 text-blue-600" />
@@ -411,64 +415,66 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
           </Card>
         )}
 
-        {/* 게임 화면들 */}
         <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
-          {/* 인트로 화면 (변경된 내용) */}
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4 animate-bounce-in">🧜‍♀️</div>
-              <CardTitle className="text-3xl font-extrabold text-stone-900 mb-2">신지께의 비밀을 찾아서</CardTitle>
-              <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="py-4 text-8xl">🧜‍♀️</div>
+              <CardTitle className="text-3xl font-extrabold text-stone-900">신지께의 비밀을 찾아서</CardTitle>
+              <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-semibold">
                 미스터리 어드벤처
               </CardDescription>
 
-              <div className="text-left space-y-4 bg-stone-50 p-6 rounded-xl border border-stone-200 shadow-inner">
-                <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-stone-700">
-                  <p>
-                    <strong className="text-green-700">여행자:</strong> 시간과 공간을 넘어 거문도의 전설을 풀어낼 탐험가
-                  </p>
-                  <p>
-                    <strong className="text-blue-700">신지께:</strong> 수호신 인어로, 상체는 사람, 하체는 물고기인 존재.
-                    녹산 앞바다로 어부들이 나가려 할 때 바닷돌을 던져 큰 풍랑을 경고하며, 달빛 아래 비친 그 자태는
-                    형언할 수 없을 만큼 아름답다.
-                  </p>
-                  <p>
-                    <strong className="text-indigo-700">장촌 어부:</strong> 장촌리 토박이 어부로, 뱃노래 전수관의
-                    관리자이자 여행자의 조력자. 다섯 소절의 뱃노래 가락과 각 명소의 숨은 이야기를 전해 준다.
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-stone-200">
+                  <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-blue-600" />
+                    등장인물 소개
+                  </h3>
+                  <div className="space-y-3 text-sm text-stone-700">
+                    <p>
+                      <strong className="text-green-700">여행자:</strong> 시간과 공간을 넘어 거문도의 전설을 풀어낼
+                      탐험가
+                    </p>
+                    <p>
+                      <strong className="text-blue-700">신지께:</strong> 수호신 인어로, 상체는 사람, 하체는 물고기인
+                      존재. 녹산 앞바다로 어부들이 나가려 할 때 바닷돌을 던져 큰 풍랑을 경고하며, 달빛 아래 비친 그
+                      자태는 형언할 수 없을 만큼 아름답다.
+                    </p>
+                    <p>
+                      <strong className="text-indigo-700">장촌 어부:</strong> 장촌리 토박이 어부로, 뱃노래 전수관의
+                      관리자이자 여행자의 조력자. 다섯 소절의 뱃노래 가락과 각 명소의 숨은 이야기를 전해 준다.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-blue-200">
+                  <h3 className="font-bold text-lg text-blue-800 flex items-center gap-2">
+                    <Scroll className="w-5 h-5 text-blue-600" />
+                    시나리오 개요
+                  </h3>
+                  <p className="text-sm leading-relaxed text-stone-700">
+                    거문도의 수호신 인어 ‘신지께’의 전설이 전해진다. 녹산 앞바다로 고기잡이 나가려 할 때, 상체는 사람이고
+                    하체는 물고기인 신지께가 바닷돌을 던져 큰 풍랑을 경고했다. 달빛에 비친 그의 모습은 형언할 수 없이
+                    아름다워, 어부들은 그를 ‘신지께’라 불렀다. 어느 날 섬을 위협하는 거친 세력이 다가오자, 신지께는
+                    바다의 균형을 유지하는 신성한 진주 목걸이를 만들고, 그 힘을 다섯 소절의 뱃노래(고사·놋·월래·가래·썰소리)에
+                    암호로 나누어 숨겼다. 목걸이는 파도의 기운을 조율해 풍랑을 잠재우고, 거문도의 평화를 지키는 핵심
+                    키이다. 이제 여행자와 마을 어부 가이드는 여수여객선터미널부터 거문대교까지 9개 명소를 돌며 퀴즈를
+                    풀고 뱃노래 소절을 모아 진주 목걸이를 완성해야만 거문도의 바다를 다시 고요로 되돌릴 수 있다.
                   </p>
                 </div>
               </div>
 
-              <div className="text-left space-y-3 bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner">
-                <h3 className="font-bold text-lg text-blue-800 flex items-center gap-2">
-                  <Scroll className="w-5 h-5 text-blue-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-stone-700">
-                  거문도의 수호신 인어 ‘신지께’의 전설이 전해진다. 녹산 앞바다로 고기잡이 나가려 할 때, 상체는 사람이고
-                  하체는 물고기인 신지께가 바닷돌을 던져 큰 풍랑을 경고했다. 달빛에 비친 그의 모습은 형언할 수 없이
-                  아름다워, 어부들은 그를 ‘신지께’라 불렀다. 어느 날 섬을 위협하는 거친 세력이 다가오자, 신지께는 바다의
-                  균형을 유지하는 신성한 진주 목걸이를 만들고, 그 힘을 다섯 소절의 뱃노래(고사·놋·월래·가래·썰소리)에
-                  암호로 나누어 숨겼다. 목걸이는 파도의 기운을 조율해 풍랑을 잠재우고, 거문도의 평화를 지키는 핵심
-                  키이다. 이제 여행자와 마을 어부 가이드는 여수여객선터미널부터 거문대교까지 9개 명소를 돌며 퀴즈를 풀고
-                  뱃노래 소절을 모아 진주 목걸이를 완성해야만 거문도의 바다를 다시 고요로 되돌릴 수 있다.
-                </p>
+              <div className="pt-2">
+                <Button
+                  onClick={handleStartGame}
+                  className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-teal-700 transition-all duration-200 shadow-lg"
+                >
+                  <Play className="w-5 h-5 mr-2" /> 모험 시작하기
+                </Button>
               </div>
-
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-teal-700 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 모험 시작하기
-              </Button>
             </CardContent>
           )}
 
-          {/* 오프닝 화면 (변경된 내용) */}
           {currentScreen === "opening" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -510,7 +516,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 장소 도착 화면 */}
           {currentScreen === "location" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -522,7 +527,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
                   {currentStep.location_name}
                 </CardTitle>
                 <div className="w-full h-48 bg-gradient-to-b from-stone-200 to-stone-300 rounded-xl flex items-center justify-center shadow-inner">
-                  {/* 수정된 이미지 표시 부분 */}
                   <img
                     src={currentStep.image || "/placeholder.svg"}
                     alt={currentStep.location_name}
@@ -545,7 +549,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 상황 화면 */}
           {currentScreen === "situation" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <CardTitle className="text-xl font-bold text-stone-900 text-center mb-4">
@@ -595,7 +598,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 퀴즈 화면 */}
           {currentScreen === "quiz" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -630,7 +632,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 결과 화면 */}
           {currentScreen === "result" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -669,7 +670,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 보상 화면 */}
           {currentScreen === "reward" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -715,7 +715,6 @@ export default function GeomundoAdventureGame({ onGameEnd }: GeomundoAdventureGa
             </CardContent>
           )}
 
-          {/* 엔딩 화면 (변경된 내용) */}
           {currentScreen === "ending" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
