@@ -166,9 +166,9 @@ const gameData = [
     quiz_question:
       "여수시 돌산읍에 위치하며, 해양 수산 문화를 전승·보전하고, 수산과학을 발전시키며, 청소년 교육의 장으로 활용하기 위해 만들어진 과학관의 이름은?",
     quiz_option1: "A. 체험전시관",
-    quiz_option2: "B. 해양수산과학관",
+    quiz_option2: "B. 해양수과학관",
     quiz_option3: "C. 바다홍보전시관",
-    quiz_answer: "B. 해양수산과학관",
+    quiz_answer: "B. 해양수과학관",
     quiz_difficulty: "중",
     culture_info:
       "해양수산과학관은 해양 수산 문화를 전승·보전하고, 수산과학을 발전시키며, 청소년 교육의 장으로 활용하기 위해 1993년 12월 29일 착공하여 1998년 2월 14일 준공하였다.",
@@ -190,7 +190,7 @@ const gameData = [
     quiz_question:
       "방죽포해수욕장의 백사장 뒤편에 150여 그루가 조성되어, 해변을 찾은 사람들이 소나무 그늘 아래에서 휴식을 취할 수 있도록 만든 숲은 무엇인가요?",
     quiz_option1: "A. 방죽포",
-    quiz_option2: "B. 죽포리",
+    quiz_option2: "B. 죽림리",
     quiz_option3: "C. 송림",
     quiz_answer: "C. 송림",
     quiz_difficulty: "상",
@@ -233,7 +233,7 @@ const gameData = [
     location_name: "원통암",
     background_text:
       "향일암 뒤편 암벽 아래 조용히 자리한 작은 암자. 지수와 금오 요정들은 암벽에 새겨진 옛 기록을 보며 여덟 번째 햇살을 기다립니다.",
-    situation_text: "“향일암 뒷 편에 있는 암자의 이름을 알아야, 이곳에서 일광욕을 즐길 수 있어요.”",
+    situation_text: "향일암 뒷 편에 있는 암자의 이름을 알아야, 이곳에서 일광욕을 즐길 수 있어요.”",
     npc_name: "지수",
     npc_dialogue:
       "“예부터 향일암은 이름난 관음 기도처였어요. 특히 이곳에는 원효대사가 수도했다는 암자가 향일암 뒤편에 있어요.”",
@@ -247,7 +247,7 @@ const gameData = [
       "예부터 향일암은 이름난 관음 기도처로서, 일 년 내내 전국 각지에서 기도 성취를 위해 신도들이 몰려든다. 여수 지역에서는 오히려 교통이 불편하고 시내 가까이에 절이 많아 찾는 신도들이 적다. 매년 1월 1일 아침에 떠오르는 해맞이 행사는 향일암의 주요 연례 행사이다. 향일암 뒤편 암벽에는 원효대사가 수도했다는 암자인 원통암이 있다.",
     reward_text: "향일암 뒤편 원통암에서 여덟 번째 일광욕을 진행합니다.",
     reward_effect: "“암자 사이로 비치는 햇살이 요정들의 돌 몸을 따스히 감쌉니다.(8/11)”",
-    next_hint_text: "“다음은 해탈문으로 이동합니다.”",
+    next_hint_text: "“다음은 돌문정으로 이동합니다.”",
   },
   {
     step_id: "9",
@@ -276,7 +276,7 @@ const gameData = [
   },
   {
     step_id: "10",
-    scenario_id: "SCN007",
+    scenario_id: "SCN011",
     sequence: 10,
     location_id: "LOC_HY_SUNRISE_010",
     location_name: "일출정",
@@ -301,7 +301,7 @@ const gameData = [
   },
   {
     step_id: "11",
-    scenario_id: "SCN007",
+    scenario_id: "SCN011",
     sequence: 11,
     location_id: "LOC_SD_TAFONI_011",
     location_name: "성두 타포니",
@@ -333,6 +333,17 @@ interface YeosuAdventureGameProps {
   onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
 
+const IntroHeader = () => (
+  <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+    <div className="max-w-lg mx-auto flex items-center justify-start">
+      <a href="/" className="flex items-baseline cursor-pointer no-underline">
+        <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+        <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+      </a>
+    </div>
+  </header>
+)
+
 // NPC 이름에 따라 다른 아이콘(이모지)을 반환하는 함수
 const getNpcEmoji = (npcName: string | null) => {
   switch (npcName) {
@@ -354,7 +365,7 @@ const getImageSrc = (sequence: number) => {
   return `/images/SCN007_${sequence}.jpg`
 }
 
-export default function DolsanAdventureGame({ onGameEnd }: YeosuAdventureGameProps) {
+export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string>("")
@@ -441,406 +452,381 @@ export default function DolsanAdventureGame({ onGameEnd }: YeosuAdventureGamePro
     }
   }
 
-  const isGameHeaderVisible = gameStarted && currentScreen !== "intro" && currentScreen !== "ending"
-  const isIntroHeaderVisible = currentScreen === "intro"
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
-      {/* 게임 소개 화면 전용 헤더 */}
-      {isIntroHeaderVisible && (
-        <header className="fixed top-0 left-0 w-full bg-gray-800 text-white py-3 px-4 z-50 shadow-md">
-          <div className="max-w-lg mx-auto flex items-center justify-start px-4">
-            <button onClick={handleExitGame} className="flex items-baseline cursor-pointer flex-shrink-0">
-              <span className="text-blue-400 text-4xl font-bold mr-3">Dooroo</span>
-            </button>
-            <span className="text-base md:text-lg font-bold text-gray-200">AI 기반 지역 탐방 퀘스트 플랫폼</span>
-          </div>
-        </header>
-      )}
+      {currentScreen === "intro" && <IntroHeader />}
 
-      {/* 게임 진행 중 헤더 */}
-      {isGameHeaderVisible && (
-        <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm shadow-md z-50 p-4">
-          <div className="max-w-lg mx-auto">
-            <div className="flex justify-between items-center">
-              <button
-                onClick={handleExitGame}
-                className="flex items-baseline cursor-pointer text-blue-500 hover:text-blue-700 transition"
-              >
-                <span className="text-2xl font-bold">Dooroo</span>
-              </button>
-              <div className="flex items-center gap-2">
-                <div className="text-sm text-amber-700 bg-amber-100 px-3 py-1 rounded-full font-semibold">
-                  {currentStepIndex + 1} / {gameData.length}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === "intro" ? "pt-20" : ""}`}>
+        {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
+          <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex justify-between items-center">
+                <h1 className="text-xl font-bold text-amber-900 flex items-center gap-2">
+                  <Camera className="w-6 h-6 text-amber-600" />
+                  {scenarioInfo.name}
+                </h1>
+                <div className="flex items-center gap-2">
+                  <div className="text-sm text-amber-700 bg-amber-100 px-3 py-1 rounded-full font-semibold">
+                    {currentStepIndex + 1} / {gameData.length}
+                  </div>
+                  <Button
+                    onClick={handleExitGame}
+                    variant="ghost"
+                    size="sm"
+                    className="text-gray-500 hover:text-gray-700 p-1"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </Button>
                 </div>
-                <Button
-                  onClick={handleExitGame}
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-500 hover:text-gray-700 p-1"
-                >
-                  <LogOut className="w-5 h-5" />
-                </Button>
               </div>
-            </div>
-            <h1 className="text-lg font-bold text-amber-900 truncate mt-2 flex items-center gap-2">
-              <Camera className="w-5 h-5 text-amber-600 flex-shrink-0" />
-              <span>{scenarioInfo.name}</span>
-            </h1>
-            <Progress
-              value={progress}
-              className="h-2 mt-2 bg-amber-200 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-amber-500 [&::-webkit-progress-value]:to-orange-500"
-            />
-          </div>
-        </header>
-      )}
+              <Progress
+                value={progress}
+                className="h-2 bg-amber-200 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-amber-500 [&::-webkit-progress-value]:to-orange-500"
+              />
+            </CardContent>
+          </Card>
+        )}
 
-      {/* 게임 콘텐츠 */}
-      <main className={`p-4 ${(isGameHeaderVisible || isIntroHeaderVisible) ? "pt-24" : ""}`}>
-        <div className="max-w-lg mx-auto">
-          <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
-            {/* 인트로 화면 */}
-            {currentScreen === "intro" && (
-              <CardContent className="p-8 text-center space-y-6">
-                <div className="text-8xl mb-4">✨</div>
-                <CardTitle className="text-3xl font-bold text-amber-900 mb-2">{scenarioInfo.name}</CardTitle>
-                <CardDescription className="inline-block bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-medium">
-                  {scenarioInfo.genre}
-                </CardDescription>
+        <Card className="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2 border-amber-300">
+          {currentScreen === "intro" && (
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="flex justify-center pt-4 pb-2">
+                <Sparkles className="w-20 h-20 text-yellow-400" />
+              </div>
 
-                <div className="text-left space-y-4 bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-inner">
+              <CardTitle className="text-3xl font-bold text-gray-800">{scenarioInfo.name}</CardTitle>
+
+              <CardDescription className="inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-sm font-semibold">
+                {scenarioInfo.genre}
+              </CardDescription>
+
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-amber-200">
                   <h3 className="font-bold text-lg text-amber-900 flex items-center gap-2">
                     <Users className="w-5 h-5 text-amber-600" />
                     등장인물 소개
                   </h3>
-                  <div className="space-y-3 text-sm text-gray-700">
+                  <div className="space-y-4 text-sm text-gray-600">
                     {scenarioInfo.characters_info.map((char) => (
                       <div key={char.name} className="flex items-start gap-3">
-                        <span className="text-2xl">{char.emoji}</span>
+                        <span className="text-2xl pt-1">{char.emoji}</span>
                         <div>
-                          <strong className="text-amber-800">{char.name}:</strong>
-                          <p>{char.description}</p>
+                          <strong className="font-bold text-gray-800">{char.name}:</strong>
+                          <p className="leading-relaxed mt-1">{char.description}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="text-left space-y-3 bg-green-50 p-6 rounded-xl border border-green-200 shadow-inner">
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-green-200">
                   <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
                     <ScrollText className="w-5 h-5 text-green-600" />
                     시나리오 개요
                   </h3>
-                  <p className="text-sm leading-relaxed text-gray-700">{scenarioInfo.overview}</p>
+                  <p className="text-sm leading-relaxed text-gray-600 pt-1">{scenarioInfo.overview}</p>
                 </div>
+              </div>
 
+              <div className="pt-2">
                 <Button
                   onClick={handleStartGame}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg transform hover:scale-105"
+                  className="w-full bg-orange-500 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:bg-orange-600 transition-all duration-200 shadow-lg"
                 >
                   <Play className="w-5 h-5 mr-2" /> 여행 시작하기
                 </Button>
-              </CardContent>
-            )}
+              </div>
+            </CardContent>
+          )}
 
-            {/* ... (오프닝, 장소, 상황, 퀴즈, 결과, 보상, 엔딩 화면 코드는 생략) ... */}
-            
-            {/* 오프닝 화면 */}
-            {currentScreen === "opening" && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">👩‍🎓</div>
-                  <CardTitle className="text-2xl font-bold text-amber-800">지수</CardTitle>
+          {currentScreen === "opening" && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center mb-6">
+                <div className="text-6xl mb-4">👩‍🎓</div>
+                <CardTitle className="text-2xl font-bold text-amber-800">지수</CardTitle>
+              </div>
+
+              <div className="bg-amber-50 p-6 rounded-xl space-y-4 border-l-4 border-amber-400 shadow-inner">
+                <p className="text-sm leading-relaxed text-gray-800">{scenarioInfo.opening_dialogue}</p>
+
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
+                  <p className="font-bold text-amber-900 flex items-center justify-center gap-2">
+                    <Heart className="w-5 h-5 text-red-500" />
+                    {scenarioInfo.opening_question}
+                  </p>
                 </div>
+              </div>
 
-                <div className="bg-amber-50 p-6 rounded-xl space-y-4 border-l-4 border-amber-400 shadow-inner">
-                  <p className="text-sm leading-relaxed text-gray-800">{scenarioInfo.opening_dialogue}</p>
-
-                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200 shadow-sm">
-                    <p className="font-bold text-amber-900 flex items-center justify-center gap-2">
-                      <Heart className="w-5 h-5 text-red-500" />
-                      {scenarioInfo.opening_question}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <Button
-                    onClick={handleAcceptQuest}
-                    className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-md transform hover:scale-105"
-                  >
-                    <CheckCircle className="w-5 h-5 mr-2" /> {scenarioInfo.opening_option1}
-                  </Button>
-                  <Button
-                    onClick={handleRestart}
-                    variant="outline"
-                    className="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200 border-gray-300"
-                  >
-                    <XCircle className="w-5 h-5 mr-2" /> {scenarioInfo.opening_option2}
-                  </Button>
-                </div>
-              </CardContent>
-            )}
-
-            {/* 장소 도착 화면 */}
-            {currentScreen === "location" && currentStep && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-4">
-                  <div className="text-6xl text-amber-500 mb-4 animate-fade-in">
-                    <Map className="w-full h-full" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold text-amber-900 flex items-center justify-center gap-2">
-                    <Map className="w-6 h-6 text-amber-600" />
-                    {currentStep.location_name}
-                  </CardTitle>
-                  <div className="w-full h-48 bg-gradient-to-b from-amber-200 to-amber-300 rounded-xl flex items-center justify-center shadow-inner">
-                    <img
-                      src={getImageSrc(currentStep.sequence)}
-                      alt={currentStep.location_name}
-                      className="w-full h-full object-cover rounded-xl"
-                    />
-                  </div>
-                  <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 shadow-sm">
-                    <p className="text-amber-800 font-semibold flex items-center justify-center gap-2">
-                      <Sparkles className="w-5 h-5 text-amber-600" /> 햇살 명소에 도착했습니다!
-                    </p>
-                  </div>
-                </div>
-
+              <div className="space-y-3">
                 <Button
-                  onClick={handleLocationNext}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
+                  onClick={handleAcceptQuest}
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-md transform hover:scale-105"
                 >
-                  <Compass className="w-5 h-5 mr-2" /> 햇살 맞으러 가기
+                  <CheckCircle className="w-5 h-5 mr-2" /> {scenarioInfo.opening_option1}
                 </Button>
-              </CardContent>
-            )}
+                <Button
+                  onClick={handleRestart}
+                  variant="outline"
+                  className="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-200 transition-all duration-200 border-gray-300"
+                >
+                  <XCircle className="w-5 h-5 mr-2" /> {scenarioInfo.opening_option2}
+                </Button>
+              </div>
+            </CardContent>
+          )}
 
-            {/* 상황 화면 */}
-            {currentScreen === "situation" && currentStep && (
-              <CardContent className="p-8 space-y-6">
-                <CardTitle className="text-xl font-bold text-amber-900 text-center mb-4">
+          {currentScreen === "location" && currentStep && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center space-y-4">
+                <div className="text-6xl text-amber-500 mb-4 animate-fade-in">
+                  <Map className="w-full h-full" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-amber-900 flex items-center justify-center gap-2">
+                  <Map className="w-6 h-6 text-amber-600" />
                   {currentStep.location_name}
                 </CardTitle>
+                <div className="w-full h-48 bg-gradient-to-b from-amber-200 to-amber-300 rounded-xl flex items-center justify-center shadow-inner">
+                  <img
+                    src={getImageSrc(currentStep.sequence) || "/placeholder.svg"}
+                    alt={currentStep.location_name}
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                </div>
+                <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 shadow-sm">
+                  <p className="text-amber-800 font-semibold flex items-center justify-center gap-2">
+                    <Sparkles className="w-5 h-5 text-amber-600" /> 추억의 장소에 도착했습니다!
+                  </p>
+                </div>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="bg-amber-50 p-5 rounded-xl border border-amber-200 shadow-inner">
+              <Button
+                onClick={handleLocationNext}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
+              >
+                <Compass className="w-5 h-5 mr-2" /> 추억 더듬어보기
+              </Button>
+            </CardContent>
+          )}
+
+          {currentScreen === "situation" && currentStep && (
+            <CardContent className="p-8 space-y-6">
+              <CardTitle className="text-xl font-bold text-amber-900 text-center mb-4">
+                {currentStep.location_name}
+              </CardTitle>
+
+              <div className="space-y-4">
+                <div className="bg-amber-50 p-5 rounded-xl border border-amber-200 shadow-inner">
+                  <p
+                    className="text-sm leading-relaxed text-gray-800 italic"
+                    dangerouslySetInnerHTML={{ __html: currentStep.background_text }}
+                  ></p>
+                </div>
+
+                <div className="bg-green-50 p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">{getNpcEmoji(currentStep.npc_name)}</div>
                     <p
-                      className="text-sm leading-relaxed text-gray-800 italic"
-                      dangerouslySetInnerHTML={{ __html: currentStep.background_text }}
+                      className="text-sm leading-relaxed text-gray-800"
+                      dangerouslySetInnerHTML={{ __html: currentStep.situation_text }}
                     ></p>
                   </div>
+                </div>
 
-                  <div className="bg-green-50 p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
+                {currentStep.npc_name && currentStep.npc_dialogue && (
+                  <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-400 shadow-sm">
                     <div className="flex items-start gap-3">
                       <div className="text-2xl">{getNpcEmoji(currentStep.npc_name)}</div>
-                      <p
-                        className="text-sm leading-relaxed text-gray-800"
-                        dangerouslySetInnerHTML={{ __html: currentStep.situation_text }}
-                      ></p>
-                    </div>
-                  </div>
-
-                  {currentStep.npc_name && currentStep.npc_dialogue && (
-                    <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-400 shadow-sm">
-                      <div className="flex items-start gap-3">
-                        <div className="text-2xl">{getNpcEmoji(currentStep.npc_name)}</div>
-                        <div>
-                          <p className="font-bold text-purple-700 mb-2">{currentStep.npc_name}</p>
-                          <p
-                            className="text-sm leading-relaxed text-gray-800"
-                            dangerouslySetInnerHTML={{ __html: currentStep.npc_dialogue }}
-                          ></p>
-                        </div>
+                      <div>
+                        <p className="font-bold text-purple-700 mb-2">{currentStep.npc_name}</p>
+                        <p
+                          className="text-sm leading-relaxed text-gray-800"
+                          dangerouslySetInnerHTML={{ __html: currentStep.npc_dialogue }}
+                        ></p>
                       </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+              </div>
 
-                <Button
-                  onClick={handleSituationNext}
-                  className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white py-4 px-6 rounded-xl font-bold hover:from-yellow-600 hover:to-amber-600 transition-all duration-200 shadow-md transform hover:scale-105"
+              <Button
+                onClick={handleSituationNext}
+                className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white py-4 px-6 rounded-xl font-bold hover:from-yellow-600 hover:to-amber-600 transition-all duration-200 shadow-md transform hover:scale-105"
+              >
+                <Brain className="w-5 h-5 mr-2" /> 퀴즈 풀기
+              </Button>
+            </CardContent>
+          )}
+
+          {currentScreen === "quiz" && currentStep && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center mb-6">
+                <div
+                  className={`inline-block px-4 py-2 rounded-full text-sm font-bold border-2 ${getDifficultyColor(currentStep.quiz_difficulty)}`}
                 >
-                  <Brain className="w-5 h-5 mr-2" /> 퀴즈 풀기
-                </Button>
-              </CardContent>
-            )}
+                  난이도: {currentStep.quiz_difficulty}
+                </div>
+              </div>
 
-            {/* 퀴즈 화면 */}
-            {currentScreen === "quiz" && currentStep && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center mb-6">
-                  <div
-                    className={`inline-block px-4 py-2 rounded-full text-sm font-bold border-2 ${getDifficultyColor(currentStep.quiz_difficulty)}`}
+              <div className="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-400 shadow-inner">
+                <CardTitle className="text-lg font-bold text-center mb-4 text-gray-800 flex items-center justify-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-yellow-600" />
+                  {currentStep.quiz_question}
+                </CardTitle>
+              </div>
+
+              <div className="space-y-3">
+                {[currentStep.quiz_option1, currentStep.quiz_option2, currentStep.quiz_option3]
+                  .filter(Boolean)
+                  .map((option, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => handleQuizAnswer(option as string)}
+                      variant="outline"
+                      className={`w-full text-left p-4 rounded-xl font-medium text-gray-800 border-2 ${selectedAnswer === option ? "border-blue-500 bg-blue-100 shadow-md" : "border-gray-200 bg-white hover:border-blue-400 hover:bg-blue-50"} transition-all duration-200`}
+                    >
+                      {option}
+                    </Button>
+                  ))}
+              </div>
+            </CardContent>
+          )}
+
+          {currentScreen === "result" && currentStep && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center space-y-4">
+                <div className="text-8xl animate-pop-in">{isCorrectAnswer ? "🎉" : "❌"}</div>
+                <CardTitle className={`text-2xl font-bold ${isCorrectAnswer ? "text-green-600" : "text-red-600"}`}>
+                  {isCorrectAnswer ? "정답입니다!" : "오답입니다"}
+                </CardTitle>
+              </div>
+
+              {isCorrectAnswer && (
+                <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-400 shadow-inner">
+                  <h3 className="font-bold mb-3 text-blue-900 flex items-center gap-2">
+                    <Book className="w-5 h-5 text-blue-600" /> 문화 정보
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-800">{currentStep.culture_info}</p>
+                </div>
+              )}
+
+              <div className="space-y-3">
+                {isCorrectAnswer ? (
+                  <Button
+                    onClick={handleResultNext}
+                    className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-md transform hover:scale-105"
                   >
-                    난이도: {currentStep.quiz_difficulty}
-                  </div>
-                </div>
-
-                <div className="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-400 shadow-inner">
-                  <CardTitle className="text-lg font-bold text-center mb-4 text-gray-800 flex items-center justify-center gap-2">
-                    <HelpCircle className="w-5 h-5 text-yellow-600" />
-                    {currentStep.quiz_question}
-                  </CardTitle>
-                </div>
-
-                <div className="space-y-3">
-                  {[currentStep.quiz_option1, currentStep.quiz_option2, currentStep.quiz_option3]
-                    .filter(Boolean)
-                    .map((option, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => handleQuizAnswer(option as string)}
-                        variant="outline"
-                        className={`w-full text-left p-4 rounded-xl font-medium text-gray-800 border-2 ${selectedAnswer === option ? "border-blue-500 bg-blue-100 shadow-md" : "border-gray-200 bg-white hover:border-blue-400 hover:bg-blue-50"} transition-all duration-200`}
-                      >
-                        {option}
-                      </Button>
-                    ))}
-                </div>
-              </CardContent>
-            )}
-
-            {/* 결과 화면 */}
-            {currentScreen === "result" && currentStep && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-4">
-                  <div className="text-8xl animate-pop-in">{isCorrectAnswer ? "🎉" : "❌"}</div>
-                  <CardTitle className={`text-2xl font-bold ${isCorrectAnswer ? "text-green-600" : "text-red-600"}`}>
-                    {isCorrectAnswer ? "정답입니다!" : "오답입니다"}
-                  </CardTitle>
-                </div>
-
-                {isCorrectAnswer && (
-                  <div className="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-400 shadow-inner">
-                    <h3 className="font-bold mb-3 text-blue-900 flex items-center gap-2">
-                      <Book className="w-5 h-5 text-blue-600" /> 문화 정보
-                    </h3>
-                    <p className="text-sm leading-relaxed text-gray-800">{currentStep.culture_info}</p>
-                  </div>
+                    <ChevronRight className="w-5 h-5 mr-2" /> 다음으로
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleRetryQuiz}
+                    className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-6 rounded-xl font-bold hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md transform hover:scale-105"
+                  >
+                    <RefreshCcw className="w-5 h-5 mr-2" /> 다시 풀어보기
+                  </Button>
                 )}
+              </div>
+            </CardContent>
+          )}
 
-                <div className="space-y-3">
-                  {isCorrectAnswer ? (
-                    <Button
-                      onClick={handleResultNext}
-                      className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-6 rounded-xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-md transform hover:scale-105"
-                    >
-                      <ChevronRight className="w-5 h-5 mr-2" /> 다음으로
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleRetryQuiz}
-                      className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-6 rounded-xl font-bold hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md transform hover:scale-105"
-                    >
-                      <RefreshCcw className="w-5 h-5 mr-2" /> 다시 풀어보기
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            )}
+          {currentScreen === "reward" && currentStep && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center space-y-4">
+                <div className="text-6xl text-yellow-500 animate-pulse-once">✨</div>
+                <CardTitle className="text-2xl font-bold text-yellow-600">일광욕 성공!</CardTitle>
+              </div>
 
-            {/* 보상 화면 */}
-            {currentScreen === "reward" && currentStep && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-4">
-                  <div className="text-6xl text-yellow-500 animate-pulse-once">✨</div>
-                  <CardTitle className="text-2xl font-bold text-yellow-600">일광욕 성공!</CardTitle>
-                </div>
-
-                {currentStep.reward_text && (
-                  <div className="bg-yellow-50 p-5 rounded-xl border-l-4 border-yellow-400 shadow-sm">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl">🎁</div>
-                      <p className="text-sm leading-relaxed text-gray-800">{currentStep.reward_text}</p>
-                    </div>
+              {currentStep.reward_text && (
+                <div className="bg-yellow-50 p-5 rounded-xl border-l-4 border-yellow-400 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">🎁</div>
+                    <p className="text-sm leading-relaxed text-gray-800">{currentStep.reward_text}</p>
                   </div>
-                )}
+                </div>
+              )}
 
-                {currentStep.reward_effect && (
-                  <div className="bg-purple-50 p-5 rounded-xl border border-purple-200 shadow-inner">
-                    <h3 className="font-bold mb-3 text-purple-700 flex items-center gap-2">
-                      <Award className="w-5 h-5 text-purple-600" /> 햇살 효과
-                    </h3>
-                    <p className="text-sm leading-relaxed text-gray-800 whitespace-pre-line">
-                      {currentStep.reward_effect}
-                    </p>
+              {currentStep.reward_effect && (
+                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200 shadow-inner">
+                  <h3 className="font-bold mb-3 text-purple-700 flex items-center gap-2">
+                    <Award className="w-5 h-5 text-purple-600" /> 햇살 효과
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-800 whitespace-pre-line">
+                    {currentStep.reward_effect}
+                  </p>
+                </div>
+              )}
+
+              {currentStep.next_hint_text && (
+                <div className="bg-green-50 p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">💡</div>
+                    <p className="text-sm leading-relaxed text-gray-800">{currentStep.next_hint_text}</p>
                   </div>
+                </div>
+              )}
+
+              <Button
+                onClick={handleRewardNext}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
+              >
+                {currentStepIndex < gameData.length - 1 ? (
+                  <>
+                    <Map className="w-5 h-5 mr-2" /> 다음 장소로
+                  </>
+                ) : (
+                  <>
+                    <Swords className="w-5 h-5 mr-2" /> 마지막 장소로
+                  </>
                 )}
+              </Button>
+            </CardContent>
+          )}
+
+          {currentScreen === "ending" && (
+            <CardContent className="p-8 space-y-6">
+              <div className="text-center space-y-4">
+                <div className="text-8xl animate-tada">🎊</div>
+                <CardTitle className="text-3xl font-bold text-amber-900">모든 일광욕 성공!</CardTitle>
+              </div>
+
+              <div className="space-y-4">
+                <div className="bg-green-50 p-6 rounded-xl border-l-4 border-green-400 shadow-inner">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">💌</div>
+                    <div
+                      className="space-y-3 text-sm text-gray-800 whitespace-pre-line"
+                      dangerouslySetInnerHTML={{ __html: currentStep.reward_effect || "" }}
+                    ></div>
+                  </div>
+                </div>
 
                 {currentStep.next_hint_text && (
-                  <div className="bg-green-50 p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
+                  <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-400 shadow-sm">
                     <div className="flex items-start gap-3">
-                      <div className="text-2xl">💡</div>
+                      <div className="text-2xl">💬</div>
                       <p className="text-sm leading-relaxed text-gray-800">{currentStep.next_hint_text}</p>
                     </div>
                   </div>
                 )}
 
-                <Button
-                  onClick={handleRewardNext}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
-                >
-                  {currentStepIndex < gameData.length - 1 ? (
-                    <>
-                      <Map className="w-5 h-5 mr-2" /> 다음 장소로
-                    </>
-                  ) : (
-                    <>
-                      <Swords className="w-5 h-5 mr-2" /> 마지막 장소로
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            )}
-
-            {/* 엔딩 화면 */}
-            {currentScreen === "ending" && (
-              <CardContent className="p-8 space-y-6">
-                <div className="text-center space-y-4">
-                  <div className="text-8xl animate-tada">🎊</div>
-                  <CardTitle className="text-3xl font-bold text-amber-900">모든 일광욕 성공!</CardTitle>
+                <div className="bg-yellow-50 p-6 rounded-xl text-center border border-yellow-200 shadow-md">
+                  <p className="text-2xl font-bold text-amber-900 flex items-center justify-center gap-2">
+                    <Trophy className="w-7 h-7 text-yellow-600" /> 축하합니다!
+                  </p>
+                  <p className="text-lg text-amber-700 font-semibold">금오 요정들의 소원을 모두 이뤄주었습니다.</p>
                 </div>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="bg-green-50 p-6 rounded-xl border-l-4 border-green-400 shadow-inner">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl">💌</div>
-                      <div
-                        className="space-y-3 text-sm text-gray-800 whitespace-pre-line"
-                        dangerouslySetInnerHTML={{ __html: currentStep.reward_effect || "" }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  {currentStep.next_hint_text && (
-                    <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-400 shadow-sm">
-                      <div className="flex items-start gap-3">
-                        <div className="text-2xl">💬</div>
-                        <p className="text-sm leading-relaxed text-gray-800">{currentStep.next_hint_text}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="bg-yellow-50 p-6 rounded-xl text-center border border-yellow-200 shadow-md">
-                    <p className="text-2xl font-bold text-amber-900 flex items-center justify-center gap-2">
-                      <Trophy className="w-7 h-7 text-yellow-600" /> 축하합니다!
-                    </p>
-                    <p className="text-lg text-amber-700 font-semibold">금오 요정들의 소원을 모두 이뤄주었습니다.</p>
-                  </div>
-                </div>
-
-                <Button
-                  onClick={handleRestart}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
-                >
-                  <RefreshCcw className="w-5 h-5 mr-2" /> 메인페이지로 돌아가기
-                </Button>
-              </CardContent>
-            )}
-          </Card>
-        </div>
-      </main>
+              <Button
+                onClick={handleRestart}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md transform hover:scale-105"
+              >
+                <RefreshCcw className="w-5 h-5 mr-2" /> 메인페이지로 돌아가기
+              </Button>
+            </CardContent>
+          )}
+        </Card>
+      </div>
     </div>
   )
 }
