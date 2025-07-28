@@ -306,18 +306,19 @@ export default function App() {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>("all")
     return (
       <div className="min-h-screen bg-gray-50 font-sans">
-        <div className="fixed top-0 left-0 w-full bg-gray-800 text-white py-3 px-4 z-40 shadow-md">
-          <div className="max-w-5xl mx-auto text-lg font-bold text-left px-4 flex items-baseline">
-            <span className="text-blue-400 text-4xl mr-3">Dooroo</span>
-            <span>AI 기반 지역 탐방 퀘스트 플랫폼</span>
+        <header className="fixed top-0 left-0 w-full bg-gray-800 text-white py-3 px-4 z-50 shadow-md">
+          <div className="max-w-5xl mx-auto flex items-center justify-start px-4">
+            <a href="/" className="flex items-baseline cursor-pointer flex-shrink-0">
+              <span className="text-blue-400 text-4xl font-bold mr-3">Dooroo</span>
+            </a>
+            <span className="text-base md:text-lg font-bold text-gray-200">AI 기반 지역 탐방 퀘스트 플랫폼</span>
           </div>
-        </div>
+        </header>
 
-        <div className="container mx-auto max-w-5xl py-8 pt-32">
+        <main className="container mx-auto max-w-5xl pt-24 pb-8">
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
             <header className="text-center">
               {" "}
-              {/* mb-12 클래스 제거 또는 조정 */}
               <div className="flex items-center justify-center mb-4">
                 <img src="/images/yeosu_logo.jpeg" alt="여수시 로고" className="h-[52px]" />
               </div>
@@ -345,7 +346,7 @@ export default function App() {
               </Button>
             ))}
           </nav>
-          <main>
+          <div className="mt-8">
             {(() => {
               let questsToDisplay = []
               if (selectedFilterId === "all") {
@@ -404,8 +405,8 @@ export default function App() {
                 </div>
               )
             })()}
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     )
   }
