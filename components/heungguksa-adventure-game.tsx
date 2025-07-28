@@ -721,10 +721,20 @@ interface PlayerPowers {
   finalSecret: boolean // 용의 비급 (최종 비급)
 }
 
-// `onGameEnd` prop의 타입 정의를 업데이트합니다.
 interface HeungguksaAdventureGameProps {
-  onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void // Updated prop type
+  onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
+
+const IntroHeader = () => (
+  <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+    <div className="max-w-lg mx-auto flex items-center justify-start">
+      <a href="/" className="flex items-baseline cursor-pointer no-underline">
+        <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+        <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+      </a>
+    </div>
+  </header>
+)
 
 export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventureGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
@@ -767,24 +777,22 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
 
   const handleResultNext = () => {
     if (isCorrectAnswer) {
-      // 능력 획득 로직
       setPlayerPowers((prevPowers) => {
         const newPowers = { ...prevPowers }
         switch (currentStep.step_id) {
-          case "9": // 비급 획득(전): 고요한 호흡법
+          case "9":
             newPowers.firstSecret = true
             break
-          case "11": // 전사의 무기 3종 획득
+          case "11":
             newPowers.secondSecret = true
             break
-          case "27": // 최종 비급 획득: 용의 비급
+          case "27":
             newPowers.finalSecret = true
             break
         }
         return newPowers
       })
 
-      // 마지막 스텝인지 확인
       if (currentStepIndex === gameData.length - 1) {
         setCurrentScreen("ending")
       } else {
@@ -806,7 +814,6 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
     setCurrentScreen("quiz")
   }
 
-  // `handleRestart` 함수에서 `onGameEnd` 호출 시 게임 ID와 전체 이름을 전달합니다.
   const handleRestart = () => {
     setCurrentStepIndex(0)
     setCurrentScreen("intro")
@@ -818,12 +825,11 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
       finalSecret: false,
     })
     setGameStarted(false)
-    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "completed") // 게임 ID와 전체 이름 전달
+    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "completed")
   }
 
-  // `handleExitGame` 함수에서 `onGameEnd` 호출 시 게임 ID와 전체 이름을 전달합니다.
   const handleExitGame = () => {
-    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "exited") // 게임 ID와 전체 이름 전달
+    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "exited")
   }
 
   const getDifficultyColor = (difficulty: string) => {
@@ -858,9 +864,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-100 via-amber-50 to-stone-200 p-4 font-sans">
-      <div className="max-w-lg mx-auto">
-        {/* 헤더와 진행률 */}
+    <div className="min-h-screen bg-gradient-to-br from-stone-100 via-amber-50 to-stone-200 font-sans">
+      {currentScreen === "intro" && <IntroHeader />}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === "intro" ? "pt-20" : ""}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -887,8 +893,6 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                 value={progress}
                 className="h-2 bg-stone-300 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-amber-500 [&::-webkit-progress-value]:to-orange-500"
               />
-
-              {/* 플레이어 능력 */}
               <div className="flex gap-3 justify-center pt-2">
                 <div className="flex items-center gap-1 text-sm text-stone-600">
                   <BookOpen className="w-4 h-4 text-amber-600" />
@@ -910,86 +914,88 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
           </Card>
         )}
 
-        {/* 게임 화면들 */}
         <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
-          {/* 인트로 화면 */}
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4 animate-bounce-in">📜</div>
-              <CardTitle className="text-3xl font-extrabold text-stone-900 mb-2">
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="py-4 text-8xl">📜</div>
+              <CardTitle className="text-3xl font-extrabold text-stone-900">
                 흥국사에 숨겨진 무공비급을 찾아라
               </CardTitle>
-              <CardDescription className="inline-block bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-semibold">
+              <CardDescription className="inline-block bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full text-sm font-semibold">
                 무협 어드벤처 게임
               </CardDescription>
 
-              <div className="text-left space-y-4 bg-stone-50 p-6 rounded-xl border border-stone-200 shadow-inner">
-                <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-amber-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-stone-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">👦</span>
-                    <div>
-                      <strong className="text-green-700">지환:</strong>
-                      <p>
-                        흥국사 승병 훈련소에 입소한 어린 동자승. 훈련 성적은 낮지만, 조국을 향한 열정만큼은 누구보다
-                        뜨겁다.
-                      </p>
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-stone-200">
+                  <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-amber-600" />
+                    등장인물 소개
+                  </h3>
+                  <div className="space-y-3 text-sm text-stone-700">
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">👦</span>
+                      <div>
+                        <strong className="text-green-700">지환:</strong>
+                        <p>
+                          흥국사 승병 훈련소에 입소한 어린 동자승. 훈련 성적은 낮지만, 조국을 향한 열정만큼은 누구보다
+                          뜨겁다.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">💪</span>
-                    <div>
-                      <strong className="text-blue-700">운석:</strong>
-                      <p>
-                        무예 실력이 뛰어나지만 성급하고 직선적인 성격의 동자승. 지환을 늘 놀리지만, 위기 앞에선 누구보다
-                        의리가 있다.
-                      </p>
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">💪</span>
+                      <div>
+                        <strong className="text-blue-700">운석:</strong>
+                        <p>
+                          무예 실력이 뛰어나지만 성급하고 직선적인 성격의 동자승. 지환을 늘 놀리지만, 위기 앞에선 누구보다
+                          의리가 있다.
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">📚</span>
-                    <div>
-                      <strong className="text-indigo-700">연우:</strong>
-                      <p>차분하고 지혜로운 전략가형 동자승. 문서와 불경 속에서 무공의 비밀을 먼저 깨우친다.</p>
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">📚</span>
+                      <div>
+                        <strong className="text-indigo-700">연우:</strong>
+                        <p>차분하고 지혜로운 전략가형 동자승. 문서와 불경 속에서 무공의 비밀을 먼저 깨우친다.</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">👻</span>
-                    <div>
-                      <strong className="text-red-700">이준:</strong>
-                      <p>
-                        고려 말 삼별초 소속으로 몽골과 맞서 싸운 전사. 흥국사에 세 가지 무공 비급을 남기고 전인의 등장을
-                        기다려왔다.
-                      </p>
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">👻</span>
+                      <div>
+                        <strong className="text-red-700">이준:</strong>
+                        <p>
+                          고려 말 삼별초 소속으로 몽골과 맞서 싸운 전사. 흥국사에 세 가지 무공 비급을 남기고 전인의 등장을
+                          기다려왔다.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-amber-200">
+                  <h3 className="font-bold text-lg text-amber-800 flex items-center gap-2">
+                    <Scroll className="w-5 h-5 text-amber-600" />
+                    시나리오 개요
+                  </h3>
+                  <p className="text-sm leading-relaxed text-stone-700">
+                    조선, 임진왜란의 한복판. 스님들 역시 애국의 마음으로 왜군에 대항하며 흥국사에 승병 훈련소를 세우고
+                    후계를 길러내기 시작했다. 이곳에는 서로 다른 개성을 지닌 어린 동자승 세 명이 입소해 있었다. 열정
+                    하나로 버텨온 말단 훈련생 지환, 칼보다 빠른 성미의 실력자 운석, 책을 가까이하며 지략을 쌓는 연우.
+                    그러던 어느 날 밤, 훈련장 깊은 곳에서 들려온 환영의 목소리. "나라가 혼란에 빠졌을 때, 흥국사에 남긴
+                    무공 비급을 찾는 자만이 전인의 자격을 얻을 것이다." 세 명의 동자승은 서로 견제하며, 때로는 협력하면서
+                    비급을 향한 수련과 모험의 여정을 시작한다.
+                  </p>
+                </div>
               </div>
 
-              <div className="text-left space-y-3 bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-inner">
-                <h3 className="font-bold text-lg text-amber-800 flex items-center gap-2">
-                  <Scroll className="w-5 h-5 text-amber-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-stone-700">
-                  조선, 임진왜란의 한복판. 스님들 역시 애국의 마음으로 왜군에 대항하며 흥국사에 승병 훈련소를 세우고
-                  후계를 길러내기 시작했다. 이곳에는 서로 다른 개성을 지닌 어린 동자승 세 명이 입소해 있었다. 열정
-                  하나로 버텨온 말단 훈련생 지환, 칼보다 빠른 성미의 실력자 운석, 책을 가까이하며 지략을 쌓는 연우.
-                  그러던 어느 날 밤, 훈련장 깊은 곳에서 들려온 환영의 목소리. "나라가 혼란에 빠졌을 때, 흥국사에 남긴
-                  무공 비급을 찾는 자만이 전인의 자격을 얻을 것이다." 세 명의 동자승은 서로 견제하며, 때로는 협력하면서
-                  비급을 향한 수련과 모험의 여정을 시작한다.
-                </p>
+              <div className="pt-2">
+                <Button
+                  onClick={handleStartGame}
+                  className="w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-200 shadow-lg"
+                >
+                  <Play className="w-5 h-5 mr-2" /> 게임 시작하기
+                </Button>
               </div>
-
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 게임 시작하기
-              </Button>
             </CardContent>
           )}
 
@@ -1046,7 +1052,6 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                   {currentStep.location_name}
                 </CardTitle>
                 <div className="w-full h-48 bg-gradient-to-b from-stone-200 to-stone-300 rounded-xl flex items-center justify-center shadow-inner">
-                  {/* 수정된 이미지 표시 부분 */}
                   <img
                     src={currentStep.image || "/placeholder.svg"}
                     alt={currentStep.location_name}
