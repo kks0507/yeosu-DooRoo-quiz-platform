@@ -28,7 +28,7 @@ import { Progress } from "@/components/ui/progress"
 
 const scenarioInfo = {
   id: "SCN_YEOWALK_001",
-  name: "초등 친구들의 여수 우정 여행",
+  name: "친구들과의 여수 우정 여행",
   genre: "회상 우정 여행 드라마",
   characters_info: [
     {
