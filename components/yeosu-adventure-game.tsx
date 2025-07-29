@@ -31,7 +31,6 @@ import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/c
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 
-// 첨부된 파일의 완전한 gameData 사용
 const gameData = [
   {
     step_id: "29",
@@ -457,8 +456,19 @@ interface PlayerPowers {
 }
 
 interface YeosuAdventureGameProps {
-  onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void // Updated prop type
+  onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
+
+const IntroHeader = () => (
+    <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+        <div className="max-w-lg mx-auto flex items-center justify-start">
+            <a href="/" className="flex items-baseline cursor-pointer no-underline">
+                <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+                <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+            </a>
+        </div>
+    </header>
+)
 
 export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
@@ -505,36 +515,34 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
 
   const handleResultNext = () => {
     if (isCorrectAnswer) {
-      // 능력 획득 로직
       setPlayerPowers((prevPowers) => {
         const newPowers = { ...prevPowers }
         switch (currentStepIndex) {
-          case 5: // 고소대
+          case 5:
             newPowers.insight = true
             break
-          case 7: // 오포대
+          case 7:
             newPowers.magic = true
             break
-          case 8: // 고소동 1004 벽화 골목
+          case 8:
             newPowers.wisdom = true
             break
-          case 9: // 거북선대교
+          case 9:
             newPowers.protection = true
             break
-          case 10: // 오동도
+          case 10:
             newPowers.communication = true
             break
-          case 12: // 여수신북항
+          case 12:
             newPowers.water = true
             break
-          case 13: // 이순신대교
+          case 13:
             newPowers.bridge = true
             break
         }
         return newPowers
       })
 
-      // 마지막 스텝인지 확인
       if (currentStepIndex === gameData.length - 1) {
         setCurrentScreen("ending")
       } else {
@@ -571,11 +579,11 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
       bridge: false,
     })
     setGameStarted(false)
-    onGameEnd("yeosu", "여수 바다를 수호하라", "completed") // 게임 ID와 전체 이름 전달
+    onGameEnd("yeosu", "여수 바다를 수호하라", "completed")
   }
 
   const handleExitGame = () => {
-    onGameEnd("yeosu", "여수 바다를 수호하라", "exited") // 게임 ID와 전체 이름 전달
+    onGameEnd("yeosu", "여수 바다를 수호하라", "exited")
   }
 
   const getDifficultyColor = (difficulty: string) => {
@@ -610,9 +618,9 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100 p-4">
-      <div className="max-w-lg mx-auto">
-        {/* 헤더와 진행률 */}
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100">
+        {currentScreen === "intro" && <IntroHeader />}
+        <div className={`max-w-lg mx-auto p-4 ${currentScreen === 'intro' ? 'pt-20' : ''}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -640,7 +648,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
                 className="h-2 bg-blue-200 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-blue-500 [&::-webkit-progress-value]:to-cyan-500"
               />
 
-              {/* 플레이어 능력 */}
               <div className="flex gap-2 justify-center pt-2">
                 {Object.entries(playerPowers).map(([power, active]) => (
                   <PowerIcon key={power} power={power as keyof PlayerPowers} active={active} />
@@ -650,70 +657,75 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
           </Card>
         )}
 
-        {/* 게임 화면들 */}
-        <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
-          {/* 인트로 화면 */}
+        <Card className="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2 border-blue-300">
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4">🌊</div>
-              <CardTitle className="text-3xl font-bold text-blue-900 mb-2">여수 바다를 수호하라</CardTitle>
-              <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
-                어드벤처 게임
-              </CardDescription>
-
-              <div className="text-left space-y-4 bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner">
-                <h3 className="font-bold text-lg text-blue-900 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-gray-700">
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">🧚‍♀️</span>
-                    <div>
-                      <strong className="text-green-700">동백나무 요정:</strong>
-                      <p>이순신 장군의 계약 상대였으나, 루크의 마법으로 힘을 잃고 약해진 상태</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">🐋</span>
-                    <div>
-                      <strong className="text-blue-700">세 마리의 물의 정령 벨루가:</strong>
-                      <p>바다의 정령이자, 여수를 수호하기 위해 남겨진 세 마리의 벨루가</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">🏴‍☠️</span>
-                    <div>
-                      <strong className="text-red-700">루크선장:</strong>
-                      <p>악당해적단의 선장이자 동백나무 요정의 힘을 빼앗고 정령 벨루가들을 납치한다</p>
-                    </div>
-                  </div>
+             <CardContent className="p-6 text-center space-y-5">
+                <div className="flex justify-center pt-4 pb-2 text-7xl">
+                    🌊
                 </div>
-              </div>
 
-              <div className="text-left space-y-3 bg-yellow-50 p-6 rounded-xl border border-yellow-200 shadow-inner">
-                <h3 className="font-bold text-lg text-yellow-900 flex items-center gap-2">
-                  <ScrollText className="w-5 h-5 text-yellow-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-700">
-                  이순신 장군은 나라를 걱정하며, 떠난 뒤에도 여수 바다를 지키라는 뜻으로 동백나무 요정과 물의 정령
-                  벨루가들을 안배해 두었다. 그러나 악당 해적단의 루크 선장이 나타나 동백나무 요정의 힘을 빼앗고, 정령
-                  벨루가들을 여수 곳곳에 봉인해버린다. 여수로 여행을 온 한 가족이 여수를 구해야 하는 특별한 미션에
-                  휘말리게 된다.
-                </p>
-              </div>
+                <CardTitle className="text-3xl font-bold text-gray-800">여수 바다를 수호하라</CardTitle>
+                
+                <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-semibold">
+                    어드벤처 게임
+                </CardDescription>
 
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 게임 시작하기
-              </Button>
+                <div className="pt-4 space-y-4">
+                    <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-blue-200">
+                        <h3 className="font-bold text-lg text-blue-900 flex items-center gap-2">
+                            <Users className="w-5 h-5 text-blue-600" />
+                            등장인물 소개
+                        </h3>
+                        <div className="space-y-4 text-sm text-gray-600">
+                            <div className="flex items-start gap-3">
+                                <span className="text-2xl pt-1">🧚‍♀️</span>
+                                <div>
+                                    <strong className="font-bold text-gray-800">동백나무 요정:</strong>
+                                    <p className="leading-relaxed mt-1">이순신 장군의 계약 상대였으나, 루크의 마법으로 힘을 잃고 약해진 상태</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <span className="text-2xl pt-1">🐋</span>
+                                <div>
+                                    <strong className="font-bold text-gray-800">세 마리의 물의 정령 벨루가:</strong>
+                                    <p className="leading-relaxed mt-1">바다의 정령이자, 여수를 수호하기 위해 남겨진 세 마리의 벨루가</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <span className="text-2xl pt-1">🏴‍☠️</span>
+                                <div>
+                                    <strong className="font-bold text-gray-800">루크선장:</strong>
+                                    <p className="leading-relaxed mt-1">악당해적단의 선장이자 동백나무 요정의 힘을 빼앗고 정령 벨루가들을 납치한다</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-green-200">
+                        <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
+                            <ScrollText className="w-5 h-5 text-green-600" />
+                            시나리오 개요
+                        </h3>
+                        <p className="text-sm leading-relaxed text-gray-600 pt-1">
+                            이순신 장군은 나라를 걱정하며, 떠난 뒤에도 여수 바다를 지키라는 뜻으로 동백나무 요정과 물의 정령
+                            벨루가들을 안배해 두었다. 그러나 악당 해적단의 루크 선장이 나타나 동백나무 요정의 힘을 빼앗고, 정령
+                            벨루가들을 여수 곳곳에 봉인해버린다. 여수로 여행을 온 한 가족이 여수를 구해야 하는 특별한 미션에
+                            휘말리게 된다.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="pt-2">
+                    <Button
+                        onClick={handleStartGame}
+                        className="w-full bg-blue-500 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:bg-blue-600 transition-all duration-200 shadow-lg"
+                    >
+                        <Play className="w-5 h-5 mr-2" /> 게임 시작하기
+                    </Button>
+                </div>
             </CardContent>
           )}
 
-          {/* 오프닝 화면 */}
           {currentScreen === "opening" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -755,7 +767,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 장소 도착 화면 */}
           {currentScreen === "location" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -789,7 +800,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 상황 화면 */}
           {currentScreen === "situation" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <CardTitle className="text-xl font-bold text-blue-900 text-center mb-4">
@@ -839,7 +849,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 퀴즈 화면 */}
           {currentScreen === "quiz" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -874,7 +883,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 결과 화면 */}
           {currentScreen === "result" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -913,7 +921,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 보상 화면 */}
           {currentScreen === "reward" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -967,7 +974,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 엔딩 화면 */}
           {currentScreen === "ending" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
