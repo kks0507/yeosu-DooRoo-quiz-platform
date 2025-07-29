@@ -24,7 +24,7 @@ import {
 import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import Image from "next/image" // Import Next.js Image component
+import Image from "next/image"
 
 const scenarioInfo = {
   id: "SCN005",
@@ -186,13 +186,12 @@ const gameData = [
   },
 ]
 
-// Mapping for images based on step_id
 const locationImages: { [key: number]: string } = {
-  1: "/images/SCN006_1.jpg", // 여수엑스포역
-  2: "/images/SCN006_2.jpg", // 오션오르간
-  3: "/images/SCN006_3.jpg", // 여수 해양레일바이크
-  4: "/images/SCN006_4.jpg", // 만성리검은모래해변
-  5: "/images/SCN006_5.jpg", // 모사금해수욕장
+  1: "/images/SCN006_1.jpg",
+  2: "/images/SCN006_2.jpg",
+  3: "/images/SCN006_3.jpg",
+  4: "/images/SCN006_4.jpg",
+  5: "/images/SCN006_5.jpg",
 }
 
 type GameScreen = "intro" | "opening" | "location" | "situation" | "quiz" | "result" | "reward" | "ending"
@@ -200,6 +199,17 @@ type GameScreen = "intro" | "opening" | "location" | "situation" | "quiz" | "res
 interface YeosuAdventureGameProps {
   onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
+
+const IntroHeader = () => (
+  <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+    <div className="max-w-lg mx-auto flex items-center justify-start">
+      <a href="/" className="flex items-baseline cursor-pointer no-underline">
+        <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+        <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+      </a>
+    </div>
+  </header>
+)
 
 export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
@@ -285,9 +295,9 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100 p-4">
-      <div className="max-w-lg mx-auto">
-        {/* 헤더와 진행률 */}
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-blue-50 to-indigo-100">
+      {currentScreen === "intro" && <IntroHeader />}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === "intro" ? "pt-20" : ""}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -318,53 +328,58 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
           </Card>
         )}
 
-        {/* 게임 화면들 */}
-        <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
-          {/* 인트로 화면 */}
+        <Card className="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2 border-pink-300">
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4">💕</div>
-              <CardTitle className="text-3xl font-bold text-blue-900 mb-2">{scenarioInfo.name}</CardTitle>
-              <CardDescription className="inline-block bg-pink-100 text-pink-800 px-4 py-2 rounded-full text-sm font-medium">
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="flex justify-center pt-4 pb-2 text-7xl text-pink-500">
+                <Heart />
+              </div>
+
+              <CardTitle className="text-3xl font-bold text-gray-800">{scenarioInfo.name}</CardTitle>
+
+              <CardDescription className="inline-block bg-pink-100 text-pink-800 px-4 py-1.5 rounded-full text-sm font-semibold">
                 {scenarioInfo.genre}
               </CardDescription>
 
-              <div className="text-left space-y-4 bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner">
-                <h3 className="font-bold text-lg text-blue-900 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-gray-700">
-                  {scenarioInfo.characters_info.map((char) => (
-                    <div key={char.name} className="flex items-start gap-3">
-                      <span className="text-2xl">{char.emoji}</span>
-                      <div>
-                        <strong className="text-blue-700">{char.name}:</strong>
-                        <p>{char.description}</p>
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-blue-200">
+                  <h3 className="font-bold text-lg text-blue-900 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-blue-600" />
+                    등장인물 소개
+                  </h3>
+                  <div className="space-y-4 text-sm text-gray-600">
+                    {scenarioInfo.characters_info.map((char) => (
+                      <div key={char.name} className="flex items-start gap-3">
+                        <span className="text-2xl pt-1">{char.emoji}</span>
+                        <div>
+                          <strong className="font-bold text-gray-800">{char.name}:</strong>
+                          <p className="leading-relaxed mt-1">{char.description}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-green-200">
+                  <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
+                    <ScrollText className="w-5 h-5 text-green-600" />
+                    시나리오 개요
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-600 pt-1">{scenarioInfo.overview}</p>
                 </div>
               </div>
 
-              <div className="text-left space-y-3 bg-yellow-50 p-6 rounded-xl border border-yellow-200 shadow-inner">
-                <h3 className="font-bold text-lg text-yellow-900 flex items-center gap-2">
-                  <ScrollText className="w-5 h-5 text-yellow-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-700">{scenarioInfo.overview}</p>
+              <div className="pt-2">
+                <Button
+                  onClick={handleStartGame}
+                  className="w-full bg-pink-500 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:bg-pink-600 transition-all duration-200 shadow-lg"
+                >
+                  <Play className="w-5 h-5 mr-2" /> 게임 시작하기
+                </Button>
               </div>
-
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 게임 시작하기
-              </Button>
             </CardContent>
           )}
 
-          {/* 오프닝 화면 */}
           {currentScreen === "opening" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -401,7 +416,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 장소 도착 화면 */}
           {currentScreen === "location" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -413,7 +427,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
                   {currentStep.location_name}
                 </CardTitle>
                 <div className="w-full h-48 bg-gradient-to-b from-blue-200 to-blue-300 rounded-xl flex items-center justify-center shadow-inner">
-                  {/* 이미지를 실제 장소 이미지로 변경 */}
                   <Image
                     src={locationImages[currentStep.step_id] || "/placeholder.svg"}
                     alt={currentStep.location_name}
@@ -438,7 +451,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 상황 화면 */}
           {currentScreen === "situation" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <CardTitle className="text-xl font-bold text-blue-900 text-center mb-4">
@@ -488,7 +500,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 퀴즈 화면 */}
           {currentScreen === "quiz" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -523,7 +534,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 결과 화면 */}
           {currentScreen === "result" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -562,7 +572,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 보상 화면 */}
           {currentScreen === "reward" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -616,7 +625,6 @@ export default function YeosuAdventureGame({ onGameEnd }: YeosuAdventureGameProp
             </CardContent>
           )}
 
-          {/* 엔딩 화면 */}
           {currentScreen === "ending" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
