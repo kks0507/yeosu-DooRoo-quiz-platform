@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image" // Import Image component
+import Image from "next/image"
 import {
   Heart,
   Map,
@@ -26,7 +26,6 @@ import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/c
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 
-// --- 새 시나리오 정보 ---
 const scenarioInfo = {
   id: "SCN_YEOWALK_001",
   name: "초등 친구들의 여수 우정 여행",
@@ -59,7 +58,6 @@ const scenarioInfo = {
   opening_option2: "- 아직 마음의 준비가 좀 필요해요…",
 }
 
-// --- 새 게임 데이터 ---
 const gameData = [
   {
     step_id: 1,
@@ -226,7 +224,17 @@ interface OldRoadAdventureGameProps {
   onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
 
-// NPC 이름에 따라 다른 아이콘(이모지)을 반환하는 함수
+const IntroHeader = () => (
+    <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+        <div className="max-w-lg mx-auto flex items-center justify-start">
+            <a href="/" className="flex items-baseline cursor-pointer no-underline">
+                <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+                <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+            </a>
+        </div>
+    </header>
+)
+
 const getNpcEmoji = (npcName: string | null) => {
   switch (npcName) {
     case "수연":
@@ -324,9 +332,9 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-50 to-amber-100 p-4">
-      <div className="max-w-lg mx-auto">
-        {/* 헤더와 진행률 */}
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-orange-50 to-amber-100">
+      {currentScreen === "intro" && <IntroHeader />}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === 'intro' ? 'pt-20' : ''}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -357,53 +365,58 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
           </Card>
         )}
 
-        {/* 게임 화면들 */}
-        <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
-          {/* 인트로 화면 */}
+        <Card className="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2 border-amber-300">
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4">🎒</div>
-              <CardTitle className="text-3xl font-bold text-amber-900 mb-2">{scenarioInfo.name}</CardTitle>
-              <CardDescription className="inline-block bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="flex justify-center pt-4 pb-2 text-7xl">
+                🎒
+              </div>
+
+              <CardTitle className="text-3xl font-bold text-gray-800">{scenarioInfo.name}</CardTitle>
+              
+              <CardDescription className="inline-block bg-orange-100 text-orange-800 px-4 py-1.5 rounded-full text-sm font-semibold">
                 {scenarioInfo.genre}
               </CardDescription>
 
-              <div className="text-left space-y-4 bg-amber-50 p-6 rounded-xl border border-amber-200 shadow-inner">
-                <h3 className="font-bold text-lg text-amber-900 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-amber-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-gray-700">
-                  {scenarioInfo.characters_info.map((char) => (
-                    <div key={char.name} className="flex items-start gap-3">
-                      <span className="text-2xl">{char.emoji}</span>
-                      <div>
-                        <strong className="text-amber-800">{char.name}:</strong>
-                        <p>{char.description}</p>
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-amber-200">
+                  <h3 className="font-bold text-lg text-amber-900 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-amber-600" />
+                    등장인물 소개
+                  </h3>
+                  <div className="space-y-4 text-sm text-gray-600">
+                    {scenarioInfo.characters_info.map((char) => (
+                      <div key={char.name} className="flex items-start gap-3">
+                        <span className="text-2xl pt-1">{char.emoji}</span>
+                        <div>
+                          <strong className="font-bold text-gray-800">{char.name}:</strong>
+                          <p className="leading-relaxed mt-1">{char.description}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-green-200">
+                  <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
+                    <ScrollText className="w-5 h-5 text-green-600" />
+                    시나리오 개요
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-600 pt-1">{scenarioInfo.overview}</p>
                 </div>
               </div>
 
-              <div className="text-left space-y-3 bg-green-50 p-6 rounded-xl border border-green-200 shadow-inner">
-                <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
-                  <ScrollText className="w-5 h-5 text-green-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-700">{scenarioInfo.overview}</p>
+              <div className="pt-2">
+                <Button
+                  onClick={handleStartGame}
+                  className="w-full bg-orange-500 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:bg-orange-600 transition-all duration-200 shadow-lg"
+                >
+                  <Play className="w-5 h-5 mr-2" /> 여행 시작하기
+                </Button>
               </div>
-
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 여행 시작하기
-              </Button>
             </CardContent>
           )}
 
-          {/* 오프닝 화면 */}
           {currentScreen === "opening" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -440,7 +453,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 장소 도착 화면 */}
           {currentScreen === "location" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -476,7 +488,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 상황 화면 */}
           {currentScreen === "situation" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <CardTitle className="text-xl font-bold text-amber-900 text-center mb-4">
@@ -526,7 +537,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 퀴즈 화면 */}
           {currentScreen === "quiz" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
@@ -561,7 +571,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 결과 화면 */}
           {currentScreen === "result" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -600,7 +609,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 보상 화면 */}
           {currentScreen === "reward" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
@@ -654,7 +662,6 @@ export default function OldRoadAdventureGame({ onGameEnd }: OldRoadAdventureGame
             </CardContent>
           )}
 
-          {/* 엔딩 화면 */}
           {currentScreen === "ending" && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
