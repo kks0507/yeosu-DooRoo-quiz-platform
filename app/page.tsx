@@ -17,7 +17,7 @@ import IslandDriveAdventureGame from "../components/islandDrive-adventure-game"
 import DolsanAdventureGame from "../components/dolsan-adventure-game"
 
 // =================================================================
-// 2. 여수 전용 데이터 구조 (기존 퀘스트 복원 및 신규 퀘스트 추가)
+// 2. 여수 전용 데이터 구조
 // =================================================================
 const YEOSU_REGIONS = [
   {
@@ -70,7 +70,6 @@ const YEOSU_REGIONS = [
     id: "yeosu_city",
     name: "여수 도심권",
     quests: [
-      // 기존 '여수 바다를 수호하라' 퀘스트 복원
       {
         id: "yeosu",
         name: "여수 바다를 수호하라",
@@ -97,7 +96,6 @@ const YEOSU_REGIONS = [
         ],
         prelearningBadgeName: "여수 선행학습 완료",
       },
-      // 신규 '청량 해변의 연인' 퀘스트 추가
       {
         id: "beach_romance",
         name: "청량 해변의 연인 퀴즈 투어",
@@ -114,7 +112,6 @@ const YEOSU_REGIONS = [
     id: "yeosu_samil",
     name: "여수 삼일동",
     quests: [
-      // 기존 '흥국사' 퀘스트 복원
       {
         id: "heungguksa",
         name: "흥국사에 숨겨진 무공비급을 찾아라",
@@ -159,7 +156,6 @@ const YEOSU_REGIONS = [
     id: "yeosu_old_road",
     name: "여수의 옛길",
     quests: [
-      // 신규 '친구들과의 우정 여행' 퀘스트 추가
       {
         id: "old_road_trip",
         name: "친구들과의 여수 우정 여행",
@@ -202,21 +198,15 @@ const YEOSU_REGIONS = [
   },
 ]
 
-// 모든 퀘스트 목록을 한 번에 만들기 (ID로 퀘스트를 쉽게 찾기 위함)
 const ALL_QUESTS = YEOSU_REGIONS.flatMap((region) => region.quests)
 
 export default function App() {
   const [activeGameId, setActiveGameId] = useState<string | null>(null)
   const [activeBadgeBoardQuestId, setActiveBadgeBoardQuestId] = useState<string | null>(null)
-
-  // 모달 상태
   const [showCompletionModal, setShowCompletionModal] = useState(false)
   const [showIncompleteModal, setShowIncompleteModal] = useState(false)
   const [completedGameName, setCompletedGameName] = useState("")
 
-  // =================================================================
-  // 3. 배지 및 선행학습 상태 ID (모든 퀘스트 ID 포함)
-  // =================================================================
   const [collectedBadges, setCollectedBadges] = useState<{ [questId: string]: string[] }>({
     heungguksa: [],
     yeosu: [],
@@ -236,10 +226,6 @@ export default function App() {
     dolsan_adventure: false,
   })
   const [rewardMessage, setRewardMessage] = useState<string | null>(null)
-
-  // =================================================================
-  // 핸들러 함수들 (이하 변경 없음)
-  // =================================================================
 
   const handleGameStart = (gameId: string) => setActiveGameId(gameId)
   const handleShowBadgeBoard = (questId: string) => {
@@ -291,10 +277,6 @@ export default function App() {
     }
   }
 
-  // =================================================================
-  // 화면 렌더링 로직 (이하 변경 없음)
-  // =================================================================
-
   const GameScreen = () => {
     const quest = ALL_QUESTS.find((q) => q.id === activeGameId)
     if (!quest) return null
@@ -302,69 +284,75 @@ export default function App() {
     return <GameComponent onGameEnd={(gameId, gameName, status) => handleGameEnd(quest.id, gameName, status)} />
   }
 
+  // Define color classes map once for reuse
+  const colorClasses: { [key: string]: { gradient: string; border: string; text: string; hoverBg: string, cardBg: string, cardText: string, badgeBg: string } } = {
+    teal: {
+        gradient: "from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700",
+        border: "border-teal-400",
+        text: "text-teal-700",
+        hoverBg: "hover:bg-teal-50",
+        cardBg: "from-teal-50 to-teal-100",
+        cardText: "text-teal-800",
+        badgeBg: "bg-teal-100"
+    },
+    purple: {
+        gradient: "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
+        border: "border-purple-400",
+        text: "text-purple-700",
+        hoverBg: "hover:bg-purple-50",
+        cardBg: "from-purple-50 to-purple-100",
+        cardText: "text-purple-800",
+        badgeBg: "bg-purple-100"
+    },
+    blue: {
+        gradient: "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
+        border: "border-blue-400",
+        text: "text-blue-700",
+        hoverBg: "hover:bg-blue-50",
+        cardBg: "from-blue-50 to-blue-100",
+        cardText: "text-blue-800",
+        badgeBg: "bg-blue-100"
+    },
+    pink: {
+        gradient: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
+        border: "border-pink-400",
+        text: "text-pink-700",
+        hoverBg: "hover:bg-pink-50",
+        cardBg: "from-pink-50 to-pink-100",
+        cardText: "text-pink-800",
+        badgeBg: "bg-pink-100"
+    },
+    red: {
+        gradient: "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
+        border: "border-red-400",
+        text: "text-red-700",
+        hoverBg: "hover:bg-red-50",
+        cardBg: "from-red-50 to-red-100",
+        cardText: "text-red-800",
+        badgeBg: "bg-red-100"
+    },
+    amber: {
+        gradient: "from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700",
+        border: "border-amber-400",
+        text: "text-amber-700",
+        hoverBg: "hover:bg-amber-50",
+        cardBg: "from-amber-50 to-amber-100",
+        cardText: "text-amber-800",
+        badgeBg: "bg-amber-100"
+    },
+    orange: {
+        gradient: "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
+        border: "border-orange-400",
+        text: "text-orange-700",
+        hoverBg: "hover:bg-orange-50",
+        cardBg: "from-orange-50 to-orange-100",
+        cardText: "text-orange-800",
+        badgeBg: "bg-orange-100"
+    },
+  }
+
   const MainScreen = () => {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>("all")
-
-    // ▼▼▼▼▼ [수정됨] 색상 스타일 맵 추가 ▼▼▼▼▼
-    const colorClasses: { [key: string]: { gradient: string; border: string; text: string; hoverBg: string, cardBg: string, cardText: string } } = {
-        teal: {
-            gradient: "from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700",
-            border: "border-teal-400",
-            text: "text-teal-700",
-            hoverBg: "hover:bg-teal-50",
-            cardBg: "from-teal-50 to-teal-100",
-            cardText: "text-teal-800",
-        },
-        purple: {
-            gradient: "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
-            border: "border-purple-400",
-            text: "text-purple-700",
-            hoverBg: "hover:bg-purple-50",
-            cardBg: "from-purple-50 to-purple-100",
-            cardText: "text-purple-800",
-        },
-        blue: {
-            gradient: "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
-            border: "border-blue-400",
-            text: "text-blue-700",
-            hoverBg: "hover:bg-blue-50",
-            cardBg: "from-blue-50 to-blue-100",
-            cardText: "text-blue-800",
-        },
-        pink: {
-            gradient: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
-            border: "border-pink-400",
-            text: "text-pink-700",
-            hoverBg: "hover:bg-pink-50",
-            cardBg: "from-pink-50 to-pink-100",
-            cardText: "text-pink-800",
-        },
-        red: {
-            gradient: "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
-            border: "border-red-400",
-            text: "text-red-700",
-            hoverBg: "hover:bg-red-50",
-            cardBg: "from-red-50 to-red-100",
-            cardText: "text-red-800",
-        },
-        amber: {
-            gradient: "from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700",
-            border: "border-amber-400",
-            text: "text-amber-700",
-            hoverBg: "hover:bg-amber-50",
-            cardBg: "from-amber-50 to-amber-100",
-            cardText: "text-amber-800",
-        },
-        orange: {
-            gradient: "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
-            border: "border-orange-400",
-            text: "text-orange-700",
-            hoverBg: "hover:bg-orange-50",
-            cardBg: "from-orange-50 to-orange-100",
-            cardText: "text-orange-800",
-        },
-    }
-    
     return (
       <div className="min-h-screen bg-gray-50 font-sans">
         <header className="fixed top-0 left-0 w-full bg-gray-800 text-white py-3 px-4 z-50 shadow-md">
@@ -379,7 +367,6 @@ export default function App() {
         <main className="container mx-auto max-w-5xl pt-24 pb-8">
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
             <header className="text-center">
-              {" "}
               <div className="flex items-center justify-center mb-4">
                 <img src="/images/yeosu_logo.jpeg" alt="여수시 로고" className="h-[52px]" />
               </div>
@@ -442,7 +429,6 @@ export default function App() {
                             {quest.description}
                           </CardDescription>
                           <div className="space-y-3">
-                            {/* ▼▼▼▼▼ [수정됨] 버튼 코드 변경 ▼▼▼▼▼ */}
                             <Button
                               onClick={() => handleGameStart(quest.id)}
                               className={`w-full bg-gradient-to-r text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg transform hover:scale-105 ${colorClasses[quest.color]?.gradient || "from-gray-500 to-gray-600"}`}
@@ -455,7 +441,6 @@ export default function App() {
                             >
                               여행 인증 배지 모으기
                             </Button>
-                            {/* ▲▲▲▲▲ 여기까지 수정됨 ▲▲▲▲▲ */}
                           </div>
                         </CardContent>
                       </Card>
@@ -475,7 +460,7 @@ export default function App() {
   }
 
   const CompletionModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[100]">
       <Card className="rounded-3xl shadow-2xl p-10 max-w-md w-full text-center transform transition-all scale-100 bg-white">
         <CardContent>
           <div className="text-6xl mb-4">🏆</div>
@@ -504,7 +489,7 @@ export default function App() {
     </div>
   )
   const IncompleteModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-[100]">
       <Card className="rounded-3xl shadow-2xl p-10 max-w-md w-full text-center transform transition-all scale-100 bg-white">
         <CardContent>
           <div className="text-6xl mb-4">⚠️</div>
@@ -535,17 +520,10 @@ export default function App() {
       { name: quest.prelearningBadgeName, isPrelearning: true, displayIcon: <BookOpen className="w-full h-full" /> },
       ...quest.badges.map((name) => ({ name, isPrelearning: false, displayIcon: quest.icon })),
     ]
-    
-    // 이 부분은 수정한 colorClasses를 사용하도록 직접 바꿀 수 있지만,
-    // 이미 quest.color가 있고 템플릿 리터럴이 잘 작동한다면 그대로 두어도 괜찮습니다.
-    // 하지만 일관성을 위해 여기도 수정할 수 있습니다.
-    const cardTitleColor = `text-${quest.color}-800`
-    const collectedBadgeClasses = `bg-${quest.color}-100 border-${quest.color}-400`
-    const collectedBadgeTextColor = `text-${quest.color}-800`
 
     return (
       <div
-        className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50"
+        className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-[100]"
         onClick={handleCloseBadges}
       >
         <Card
@@ -554,7 +532,7 @@ export default function App() {
         >
           <CardContent>
             <div className="flex justify-between items-center mb-6">
-              <CardTitle className={`text-3xl font-bold ${cardTitleColor} flex items-center gap-3`}>
+              <CardTitle className={`text-3xl font-bold ${colorClasses[quest.color]?.cardText || 'text-gray-800'} flex items-center gap-3`}>
                 <Trophy className="w-7 h-7" />
                 {quest.name} 배지 보드
               </CardTitle>
@@ -568,14 +546,14 @@ export default function App() {
                 return (
                   <Card
                     key={badge.name}
-                    className={`p-4 rounded-xl border-2 flex flex-col items-center justify-between w-[140px] h-[160px] transition-all duration-300 mx-auto ${isCollected ? collectedBadgeClasses : "bg-gray-100 border-gray-200 hover:border-gray-300"}`}
+                    className={`p-4 rounded-xl border-2 flex flex-col items-center justify-between w-[140px] h-[160px] transition-all duration-300 mx-auto ${isCollected ? `${colorClasses[quest.color]?.badgeBg || 'bg-gray-200'} ${colorClasses[quest.color]?.border || 'border-gray-400'} shadow-lg` : "bg-gray-100 border-gray-200 hover:border-gray-300"}`}
                   >
                     <CardContent className="flex flex-col items-center justify-center h-full p-0">
                       <div className={`text-5xl mb-2 ${isCollected ? "" : "grayscale opacity-50"}`}>
                         {badge.displayIcon}
                       </div>
                       <CardDescription
-                        className={`font-semibold text-sm text-center leading-tight ${isCollected ? collectedBadgeTextColor : "text-gray-600"}`}
+                        className={`font-semibold text-sm text-center leading-tight ${isCollected ? colorClasses[quest.color]?.cardText || 'text-gray-800' : "text-gray-600"}`}
                       >
                         {badge.name}
                       </CardDescription>
