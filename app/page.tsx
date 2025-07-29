@@ -304,6 +304,67 @@ export default function App() {
 
   const MainScreen = () => {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>("all")
+
+    // ▼▼▼▼▼ [수정됨] 색상 스타일 맵 추가 ▼▼▼▼▼
+    const colorClasses: { [key: string]: { gradient: string; border: string; text: string; hoverBg: string, cardBg: string, cardText: string } } = {
+        teal: {
+            gradient: "from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700",
+            border: "border-teal-400",
+            text: "text-teal-700",
+            hoverBg: "hover:bg-teal-50",
+            cardBg: "from-teal-50 to-teal-100",
+            cardText: "text-teal-800",
+        },
+        purple: {
+            gradient: "from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
+            border: "border-purple-400",
+            text: "text-purple-700",
+            hoverBg: "hover:bg-purple-50",
+            cardBg: "from-purple-50 to-purple-100",
+            cardText: "text-purple-800",
+        },
+        blue: {
+            gradient: "from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
+            border: "border-blue-400",
+            text: "text-blue-700",
+            hoverBg: "hover:bg-blue-50",
+            cardBg: "from-blue-50 to-blue-100",
+            cardText: "text-blue-800",
+        },
+        pink: {
+            gradient: "from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700",
+            border: "border-pink-400",
+            text: "text-pink-700",
+            hoverBg: "hover:bg-pink-50",
+            cardBg: "from-pink-50 to-pink-100",
+            cardText: "text-pink-800",
+        },
+        red: {
+            gradient: "from-red-500 to-red-600 hover:from-red-600 hover:to-red-700",
+            border: "border-red-400",
+            text: "text-red-700",
+            hoverBg: "hover:bg-red-50",
+            cardBg: "from-red-50 to-red-100",
+            cardText: "text-red-800",
+        },
+        amber: {
+            gradient: "from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700",
+            border: "border-amber-400",
+            text: "text-amber-700",
+            hoverBg: "hover:bg-amber-50",
+            cardBg: "from-amber-50 to-amber-100",
+            cardText: "text-amber-800",
+        },
+        orange: {
+            gradient: "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700",
+            border: "border-orange-400",
+            text: "text-orange-700",
+            hoverBg: "hover:bg-orange-50",
+            cardBg: "from-orange-50 to-orange-100",
+            cardText: "text-orange-800",
+        },
+    }
+    
     return (
       <div className="min-h-screen bg-gray-50 font-sans">
         <header className="fixed top-0 left-0 w-full bg-gray-800 text-white py-3 px-4 z-50 shadow-md">
@@ -367,12 +428,12 @@ export default function App() {
                         className="rounded-3xl shadow-xl overflow-hidden border-2 border-transparent hover:border-blue-400 hover:shadow-2xl transition-all duration-300 flex flex-col"
                       >
                         <CardContent
-                          className={`p-8 bg-gradient-to-br from-${quest.color}-50 to-${quest.color}-100 text-center`}
+                          className={`p-8 bg-gradient-to-br text-center ${colorClasses[quest.color]?.cardBg || 'from-gray-50'}`}
                         >
                           <div className="text-7xl mb-4 transform hover:scale-110 transition-transform duration-300">
                             {quest.icon}
                           </div>
-                          <CardTitle className={`text-2xl font-extrabold text-${quest.color}-800`}>
+                          <CardTitle className={`text-2xl font-extrabold ${colorClasses[quest.color]?.cardText || 'text-gray-800'}`}>
                             {quest.name}
                           </CardTitle>
                         </CardContent>
@@ -381,18 +442,20 @@ export default function App() {
                             {quest.description}
                           </CardDescription>
                           <div className="space-y-3">
+                            {/* ▼▼▼▼▼ [수정됨] 버튼 코드 변경 ▼▼▼▼▼ */}
                             <Button
                               onClick={() => handleGameStart(quest.id)}
-                              className={`w-full bg-gradient-to-r from-${quest.color}-500 to-${quest.color}-600 text-white font-bold py-4 px-6 rounded-xl hover:from-${quest.color}-600 hover:to-${quest.color}-700 transition-all duration-300 shadow-lg transform hover:scale-105`}
+                              className={`w-full bg-gradient-to-r text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg transform hover:scale-105 ${colorClasses[quest.color]?.gradient || "from-gray-500 to-gray-600"}`}
                             >
                               선행학습 시작
                             </Button>
                             <Button
                               onClick={() => handleShowBadgeBoard(quest.id)}
-                              className={`w-full bg-white border-2 border-${quest.color}-400 text-${quest.color}-700 font-bold py-4 px-6 rounded-xl hover:bg-${quest.color}-50 transition-colors duration-300 shadow-md`}
+                              className={`w-full bg-white border-2 font-bold py-4 px-6 rounded-xl transition-colors duration-300 shadow-md ${colorClasses[quest.color]?.border || "border-gray-400"} ${colorClasses[quest.color]?.text || "text-gray-700"} ${colorClasses[quest.color]?.hoverBg || "hover:bg-gray-50"}`}
                             >
                               여행 인증 배지 모으기
                             </Button>
+                            {/* ▲▲▲▲▲ 여기까지 수정됨 ▲▲▲▲▲ */}
                           </div>
                         </CardContent>
                       </Card>
@@ -472,6 +535,13 @@ export default function App() {
       { name: quest.prelearningBadgeName, isPrelearning: true, displayIcon: <BookOpen className="w-full h-full" /> },
       ...quest.badges.map((name) => ({ name, isPrelearning: false, displayIcon: quest.icon })),
     ]
+    
+    // 이 부분은 수정한 colorClasses를 사용하도록 직접 바꿀 수 있지만,
+    // 이미 quest.color가 있고 템플릿 리터럴이 잘 작동한다면 그대로 두어도 괜찮습니다.
+    // 하지만 일관성을 위해 여기도 수정할 수 있습니다.
+    const cardTitleColor = `text-${quest.color}-800`
+    const collectedBadgeClasses = `bg-${quest.color}-100 border-${quest.color}-400`
+    const collectedBadgeTextColor = `text-${quest.color}-800`
 
     return (
       <div
@@ -484,7 +554,7 @@ export default function App() {
         >
           <CardContent>
             <div className="flex justify-between items-center mb-6">
-              <CardTitle className={`text-3xl font-bold text-${quest.color}-800 flex items-center gap-3`}>
+              <CardTitle className={`text-3xl font-bold ${cardTitleColor} flex items-center gap-3`}>
                 <Trophy className="w-7 h-7" />
                 {quest.name} 배지 보드
               </CardTitle>
@@ -498,14 +568,14 @@ export default function App() {
                 return (
                   <Card
                     key={badge.name}
-                    className={`p-4 rounded-xl border-2 flex flex-col items-center justify-between w-[140px] h-[160px] transition-all duration-300 mx-auto ${isCollected ? `bg-${quest.color}-100 border-${quest.color}-400 shadow-lg` : "bg-gray-100 border-gray-200 hover:border-gray-300"}`}
+                    className={`p-4 rounded-xl border-2 flex flex-col items-center justify-between w-[140px] h-[160px] transition-all duration-300 mx-auto ${isCollected ? collectedBadgeClasses : "bg-gray-100 border-gray-200 hover:border-gray-300"}`}
                   >
                     <CardContent className="flex flex-col items-center justify-center h-full p-0">
                       <div className={`text-5xl mb-2 ${isCollected ? "" : "grayscale opacity-50"}`}>
                         {badge.displayIcon}
                       </div>
                       <CardDescription
-                        className={`font-semibold text-sm text-center leading-tight ${isCollected ? `text-${quest.color}-800` : "text-gray-600"}`}
+                        className={`font-semibold text-sm text-center leading-tight ${isCollected ? collectedBadgeTextColor : "text-gray-600"}`}
                       >
                         {badge.name}
                       </CardDescription>
@@ -545,7 +615,7 @@ export default function App() {
             )}
             <Button
               onClick={handleGoToReward}
-              className={`w-full mt-6 bg-gradient-to-r from-${quest.color}-500 to-${quest.color}-600 text-white font-bold py-4 px-6 rounded-xl hover:from-${quest.color}-600 hover:to-${quest.color}-700 transition-all duration-300 shadow-lg transform hover:scale-105`}
+              className={`w-full mt-6 bg-gradient-to-r text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg transform hover:scale-105 ${colorClasses[quest.color]?.gradient || "from-gray-500 to-gray-600"}`}
             >
               <Award className="w-5 h-5 mr-2" /> 보상 받으러가기
             </Button>
