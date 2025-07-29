@@ -28,7 +28,6 @@ import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/c
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 
-// 게임 데이터: 9개의 스텝으로 구성된 추격 시나리오
 const gameData = [
   {
     step_id: "1",
@@ -51,7 +50,7 @@ const gameData = [
     culture_info:
       "백야대교는 전라남도 여수시 화양면 안포리와 백야도(화정면 백야리) 사이에 건설된 다리로, 2000년 6월에 착공하여 2005년 4월 14일 준공되었다.",
     reward_effect: "'30초 섬여행-백야도'편 영상 보기",
-    youtube_video_id: "1rZFG4xspy0", // 실제 유튜브 영상 ID로 교체하세요
+    youtube_video_id: "1rZFG4xspy0",
     next_hint_text: "“다음 목적지는 백리섬섬길 첫 번째 대교, 화양조발대교야. 그곳에서 또 다른 힌트를 찾아봐!”",
     image: "/images/SCN004_1.jpeg",
   },
@@ -103,7 +102,7 @@ const gameData = [
       "전라남도 여수시 화정면 조발리에 있는 섬으로 말 등과 같이 평지가 없이 모두 경사지로 되어 있고, 해가 일찍 떠서 밝게 비추어 준다고 해서 조발도(早發島)라 부르게 되었다.",
     reward_text: "조발도에 대한 지역 정보를 얻었다. 이제 다섬이가 조발도 어디로 도망가건 잡을 수 있다.",
     reward_effect: "'섬지순례-조발도편' 영상 보기",
-    youtube_video_id: "VTkmLIsb0YY", // 실제 유튜브 영상 ID로 교체하세요
+    youtube_video_id: "VTkmLIsb0YY",
     next_hint_text: "“다음 목적지는 둔병대교야. 그곳에서 또 다른 힌트를 찾아봐!”",
     image: "/images/SCN004_3.jpg",
   },
@@ -129,7 +128,7 @@ const gameData = [
       "전라남도 여수시 화정면 조발리의 조발도와 둔병도를 잇는 사장교로 2020년 1월 23일부터 28일까지 임시 개통하였다. 2020년 2월 28일 적금대교, 낭도대교, 화양조발대교와 함께 공식 개통하였다. 사장교(斜張橋)는 케이블이 주탑에서 사장(斜張)된 형태로 교각을 지지하는 구조의 다리이다.",
     reward_text: "둔병도에 대한 지역 정보를 얻었다. 이제 다섬이가 둔병도 어디로 도망가건 잡을 수 있다.",
     reward_effect: "'섬지순례-둔병도편' 영상 보기",
-    youtube_video_id: "_Mysz3WBnng", // 실제 유튜브 영상 ID로 교체하세요
+    youtube_video_id: "_Mysz3WBnng",
     next_hint_text: "“다음 목적지는 낭도대교야. 그곳에서 또 다른 힌트를 찾아봐!”",
     image: "/images/SCN004_4.jpg",
   },
@@ -179,7 +178,7 @@ const gameData = [
       "섬의 모양이 이리를 닮았다고 하여 이리 낭(狼)자를 써서 낭도라 부르게 되었다. 2020년 2월 말 여수와 고흥을 잇는 연륙·연도교 적금대교, 낭도대교, 둔병대교, 화양조발대교 4개가 한꺼번에 개통되면서 낭도는 승용차를 타고 들어갈 수 있다. 이중 낭도대교는 둔병도와 낭도를 연결하는 연도교이다.",
     reward_text: "낭도에 대한 지역 정보를 얻었다. 이제 다섬이가 낭도 어디로 도망가건 잡을 수 있다.",
     reward_effect: "'섬지순례-낭도편' 영상 보기",
-    youtube_video_id: "22mYnnW_5Ac", // 실제 유튜브 영상 ID로 교체하세요
+    youtube_video_id: "22mYnnW_5Ac",
     next_hint_text: "“다음 목적지는 적금대교야. 그곳에서 또 다른 힌트를 찾아봐!”",
     image: "/images/SCN004_6.jpg",
   },
@@ -231,7 +230,7 @@ const gameData = [
       "전라남도 여수시 화정면 적금리에 있는 섬으로 2020년 2월 말 여수와 고흥을 잇는 연륙·연도교 적금대교, 낭도대교, 둔병대교, 화양조발대교 4개가 한꺼번에 개통되어 육지와 연결되었다. 적금도는 전라남도 여수시 화정면에 위치한 섬으로, 과거 금을 채굴했던 흔적이 남아있는 금굴이 있는 곳으로 유명합니다.",
     reward_text: "적금도에 대한 지역 정보를 얻었다. 이제 다섬이가 적금도 어디로 도망가건 잡을 수 있다.",
     reward_effect: "'섬지순례-적금도편' 영상 보기",
-    youtube_video_id: "GdJoCfkYw2M", // 실제 유튜브 영상 ID로 교체하세요
+    youtube_video_id: "GdJoCfkYw2M",
     next_hint_text:
       "“다음 목적지는 팔영대교야. 여수를 벗어날 수 없는 다섬이는 그곳에 숨어 있을 거야. 열쇠도 찾고 다섬이도 잡아 다시 박람회장으로 돌려두자!”",
     image: "/images/SCN004_8.jpg",
@@ -269,6 +268,17 @@ type GameScreen = "intro" | "opening" | "location" | "situation" | "quiz" | "res
 interface DasomiChaseGameProps {
   onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void
 }
+
+const IntroHeader = () => (
+    <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-sm py-3 px-4 z-50 shadow-sm border-b">
+        <div className="max-w-lg mx-auto flex items-center justify-start">
+            <a href="/" className="flex items-baseline cursor-pointer no-underline">
+                <span className="text-blue-500 text-3xl font-bold mr-3">Dooroo</span>
+                <span className="text-base font-bold text-gray-600">AI 기반 지역 탐방 퀘스트 플랫폼</span>
+            </a>
+        </div>
+    </header>
+)
 
 export default function DasomiChaseGame({ onGameEnd }: DasomiChaseGameProps) {
   const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
@@ -359,8 +369,9 @@ export default function DasomiChaseGame({ onGameEnd }: DasomiChaseGameProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-blue-200 p-4 font-sans">
-      <div className="max-w-lg mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-teal-50 to-blue-200">
+      {currentScreen === "intro" && <IntroHeader />}
+      <div className={`max-w-lg mx-auto p-4 ${currentScreen === 'intro' ? 'pt-20' : ''}`}>
         {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
           <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
             <CardContent className="p-4 space-y-3">
@@ -398,50 +409,58 @@ export default function DasomiChaseGame({ onGameEnd }: DasomiChaseGameProps) {
           </Card>
         )}
 
-        <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
+        <Card className="bg-white/95 rounded-2xl shadow-xl overflow-hidden border-2 border-blue-200">
           {currentScreen === "intro" && (
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="text-8xl mb-4 animate-bounce-in">🏃‍♀️</div>
-              <CardTitle className="text-3xl font-extrabold text-stone-900 mb-2">사라진 다섬이를 찾아서</CardTitle>
-              <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
+            <CardContent className="p-6 text-center space-y-5">
+              <div className="flex justify-center pt-4 pb-2 text-7xl">
+                🏃‍♀️
+              </div>
+
+              <CardTitle className="text-3xl font-bold text-gray-800">사라진 다섬이를 찾아서</CardTitle>
+              
+              <CardDescription className="inline-block bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-semibold">
                 추격 어드벤처
               </CardDescription>
 
-              <div className="text-left space-y-4 bg-stone-50 p-6 rounded-xl border border-stone-200 shadow-inner">
-                <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
-                  <Users className="w-5 h-5 text-blue-600" />
-                  등장인물 소개
-                </h3>
-                <div className="space-y-3 text-sm text-stone-700">
-                  <p>
-                    <strong className="text-green-700">여행자:</strong> 다섬이를 쫓는 용감한 추격자
-                  </p>
-                  <p>
-                    <strong className="text-blue-700">다섬이:</strong> 여수 섬 박람회장에서 열쇠를 가지고 탈출한
-                    장난꾸러기 마스코트. 아름다운 섬 구경을 하고 싶어한다.
+              <div className="pt-4 space-y-4">
+                <div className="text-left space-y-4 bg-white p-5 rounded-xl border-2 border-stone-200">
+                  <h3 className="font-bold text-lg text-stone-800 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-blue-600" />
+                    등장인물 소개
+                  </h3>
+                  <div className="space-y-4 text-sm text-gray-600">
+                    <p>
+                        <strong className="font-bold text-gray-800">여행자:</strong> 다섬이를 쫓는 용감한 추격자
+                    </p>
+                    <p>
+                        <strong className="font-bold text-gray-800">다섬이:</strong> 여수 섬 박람회장에서 열쇠를 가지고 탈출한
+                        장난꾸러기 마스코트. 아름다운 섬 구경을 하고 싶어한다.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-left space-y-3 bg-white p-5 rounded-xl border-2 border-green-200">
+                  <h3 className="font-bold text-lg text-green-900 flex items-center gap-2">
+                    <Scroll className="w-5 h-5 text-green-600" />
+                    시나리오 개요
+                  </h3>
+                  <p className="text-sm leading-relaxed text-gray-600 pt-1">
+                    여수 섬 박람회장의 마스코트 '다섬이'가 전시관 열쇠를 가지고 사라졌다! 다섬이는 여수와 고흥을 잇는
+                    아름다운 길, '백리섬섬길'을 따라 도망치며 흔적을 남기고 있다. 여행자는 다섬이가 남긴 퀴즈를 풀며
+                    그녀를 추격하고, 박람회장의 열쇠를 되찾아 무사히 복귀시켜야 한다. 백야대교에서 시작해 팔영대교에
+                    이르는 9개 명소를 넘나드는 추격전이 지금 시작된다.
                   </p>
                 </div>
               </div>
 
-              <div className="text-left space-y-3 bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner">
-                <h3 className="font-bold text-lg text-blue-800 flex items-center gap-2">
-                  <Scroll className="w-5 h-5 text-blue-600" />
-                  시나리오 개요
-                </h3>
-                <p className="text-sm leading-relaxed text-stone-700">
-                  여수 섬 박람회장의 마스코트 '다섬이'가 전시관 열쇠를 가지고 사라졌다! 다섬이는 여수와 고흥을 잇는
-                  아름다운 길, '백리섬섬길'을 따라 도망치며 흔적을 남기고 있다. 여행자는 다섬이가 남긴 퀴즈를 풀며
-                  그녀를 추격하고, 박람회장의 열쇠를 되찾아 무사히 복귀시켜야 한다. 백야대교에서 시작해 팔영대교에
-                  이르는 9개 명소를 넘나드는 추격전이 지금 시작된다.
-                </p>
+              <div className="pt-2">
+                <Button
+                  onClick={handleStartGame}
+                  className="w-full bg-blue-600 text-white py-3.5 px-6 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all duration-200 shadow-lg"
+                >
+                  <Play className="w-5 h-5 mr-2" /> 추격 시작하기
+                </Button>
               </div>
-
-              <Button
-                onClick={handleStartGame}
-                className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-teal-700 transition-all duration-200 shadow-lg transform hover:scale-105"
-              >
-                <Play className="w-5 h-5 mr-2" /> 추격 시작하기
-              </Button>
             </CardContent>
           )}
 
