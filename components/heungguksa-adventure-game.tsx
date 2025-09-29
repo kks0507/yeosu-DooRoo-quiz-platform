@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 import {
   Zap,
   Book,
@@ -24,10 +24,15 @@ import {
   BookOpen,
   Map,
   LogOut,
-} from "lucide-react"
-import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 
 // 첨부된 파일의 완전한 gameData 사용
 const gameData = [
@@ -68,11 +73,12 @@ const gameData = [
       "“이게 바로 무지개 다리라고? 전설처럼 생기진 않았네.” 운석이 팔짱을 낀 채 홍교를 흘겨보았다. 그 눈빛엔 은근한 긴장감이 감돌았다.",
     npc_name: null,
     npc_dialogue: null,
-    quiz_question: "이 홍교의 별칭은 무엇인가?",
-    quiz_option1: "A. 흥국사",
-    quiz_option2: "B. 무지개다리",
-    quiz_option3: "C. 봉황루",
-    quiz_answer: "B. 무지개다리", // Modified
+    quiz_question:
+      "흥국사 입구의 홍교는 보물로 지정되어 있는 돌다리로 무엇과 닮았나요?",
+    quiz_option1: "A. 무지개",
+    quiz_option2: "B. 개구리",
+    quiz_option3: "C. 뱀",
+    quiz_answer: "A. 무지개", // Modified
     quiz_difficulty: "보통",
     culture_info:
       "전라남도 여수시 중흥동 흥국사에 위치한 조선 중기 돌다리로, 일주문 왼쪽 계곡 아래 약 50m 지점에 자리하고 있다. 아치형 구조로 된 이 돌다리는 과거 흥국사의 유일한 진입로였으며, 흥국사의 상징적인 입구 역할을 했다. 이 다리를 건너야만 사찰로 들어갈 수 있었다.",
@@ -85,15 +91,41 @@ const gameData = [
     step_id: "3",
     scenario_id: "SCN001",
     sequence: 3,
+    location_id: "68391b8febaff406476cf4b6",
+    location_name: "부도탑",
+    background_text:
+      "응진당을 나선 세 사람은 이준 전사의 안내에 따라 부도탑 앞에 섰다. 바람에 흩날리는 낙엽처럼 고요한 정적에 잠겼다. 회색빛 승탑들이 늘어서 있는 모습은 마치 묵묵히 진리를 지키는 스승들 같았다.",
+    situation_text:
+      "지환이 탑 하나하나를 손가락으로 세며 중얼거렸다.<br>“시대도 다 다르고, 형태도 조금씩 달라. 이 탑군에는 모두 몇 기의 승탑이 있을까?”<br>연우는 노트를 꺼내 시별 특징을 적고, 운석은 각 탑의 모양을 살펴보며 입체적으로 공간을 이해한다.",
+    npc_name: null,
+    npc_dialogue: null,
+    quiz_question: "이 부도탑 탑군에는 총 몇 기의 승탑이 있나요?",
+    quiz_option1: "A. 10기",
+    quiz_option2: "B. 12기",
+    quiz_option3: "C. 16기",
+    quiz_answer: "B. 12기", // Modified
+    quiz_difficulty: "중",
+    culture_info:
+      "전라남도 여수시 중흥동 흥국사에 있는 조선 후기부터 일제 강점기에 세워진 승탑들을 모아 놓은 탑군으로 12기의 승탑은 석종형 3기 외에는 모두 구형 승탑으로 16세기에 2기, 17세기에 4기, 18세기에 3기, 19세기에 2기, 20세기에 1기가 건립되었다. 원래는 흥국사 관내 여러 곳에 산재해 있었으나 1986년 현재의 자리로 이건하였다. 최근에 입적한 고승들 4명의 승탑이 추가됨",
+    reward_text: null,
+    reward_effect: null,
+    next_hint_text: "“일곱 부처의 진리를 밝힌 팔상전으로 향하라.”",
+    image: "/images/SCN001_20.jpeg",
+  },
+  {
+    step_id: "4",
+    scenario_id: "SCN001",
+    sequence: 4,
     location_id: "683937e2ebaff406476cf5ad",
     location_name: "천왕문",
     background_text:
-      "홍교 위 붉은 노을을 뒤로하고, 지환은 천왕문 안 작은 사당으로 발걸음을 옮겼다. 이준 전사의 “사천왕상의 위엄을 체험하라”는 목소리가 귓가에 맴돌았다. 사당을 가득 채운 사천왕상 네 기 중, 북방을 지키는 광목천왕의 날카로운 눈빛은 어둠을 몰아내듯 살아 있었다.",
+      "홍교 위 붉은 노을을 뒤로하고, 지환은 천왕문 안으로 발걸음을 옮겼다. 이준 전사의 “사천왕상의 위엄을 체험하라”는 목소리가 귓가에 맴돌았다. 사당을 가득 채운 사천왕상 네 기 중, 북방을 지키는 광목천왕의 날카로운 눈빛은 어둠을 몰아내듯 살아 있었다.",
     situation_text:
       "“사천왕 중 하나, 광목천왕… 이 안에 단서가 있어.” 연우는 고개를 들어 조각상과 벽화를 유심히 살폈다. 이내 그의 눈에 무언가 떠오른 듯 빛이 일었다.",
     npc_name: null,
     npc_dialogue: null,
-    quiz_question: "서방 광목천왕(廣目天王)의 권속으로 대표되는 동물과 보물은 무엇인가요?",
+    quiz_question:
+      "서방 광목천왕(廣目天王)의 권속으로 대표되는 동물과 보물은 무엇인가요?",
     quiz_option1: "A. 용과 여의주",
     quiz_option2: "B. 보검",
     quiz_option3: "C. 비파",
@@ -107,9 +139,9 @@ const gameData = [
     image: "/images/SCN001_3.jpg",
   },
   {
-    step_id: "4",
+    step_id: "5",
     scenario_id: "SCN001",
-    sequence: 4,
+    sequence: 5,
     location_id: "68392244ebaff406476cf557",
     location_name: "봉황루",
     background_text:
@@ -132,18 +164,45 @@ const gameData = [
     image: "/images/SCN001_4.jpeg",
   },
   {
-    step_id: "5",
+    step_id: "6",
     scenario_id: "SCN001",
-    sequence: 5,
+    sequence: 6,
+    location_id: "683919c4ebaff406476cf4a3",
+    location_name: "법고대좌",
+    background_text:
+      "운석의 말대로, 험상궂은 사자 형상이 새겨진 석조 대좌 위에, 거대한 북이 단단히 고정되어 있었다. 강렬한 햇살이 대좌를 스치자, 운석은 본능적으로 그 위엄을 느꼈다. 그는 천천히 걸음을 옮기더니 북을 향해 손을 뻗었다.",
+    situation_text:
+      "“이거야말로 전장의 북소리! 누가 뭐래도 이건 법고지.” 운석이 자부하듯 말했다.",
+    npc_name: null,
+    npc_dialogue: null,
+    quiz_question: "이 사자형 대좌가 받치고 있는 전각의 불전 사물은?",
+    quiz_option1: "A. 범종",
+    quiz_option2: "B. 법고",
+    quiz_option3: "C. 목어",
+    quiz_answer: "B. 법고", // Modified
+    quiz_difficulty: "보통",
+    culture_info:
+      "전라남도 여수시 중흥동 흥국사 범종각에 있는 조선 후기 법고 대좌로, 사자 모양으로 조각된 석조대좌가 대형 법고를 힘차게 떠받치고 있다. 법고는 사찰의 일과 시작이나 의식을 알릴 때 사용되는 중요한 불전 사물 중 하나이다.",
+    reward_text: null,
+    reward_effect: null,
+    next_hint_text:
+      "“북소리의 울림이 가라앉자, 곁에 있는 동종에서 은은한 기운이 느껴진다. 저 종에 새겨진 옛 연대를 꿰뚫어 보라.”",
+    image: "/images/SCN001_8.jpeg",
+  },
+  {
+    step_id: "7",
+    scenario_id: "SCN001",
+    sequence: 7,
     location_id: "68392000ebaff406476cf515",
     location_name: "범종각",
     background_text:
       "이준 전사의 목소리가 '승병의 결의가 깊이 새겨진 곳'이라 전한 범종각에 도착한 지환은, 문을 밀고 안으로 들어섰다. 금속 종과 나란히 놓인 목제 북이 눈에 들어오고, 오래된 법고는 정성스럽게 수리되어 제자리에 다시 놓여 있었다.",
     situation_text:
-      "“봐, 저 북 말이야. 오래돼 보이지만 누가 봐도 손질 흔적이 남아 있잖아.” 운석은 법고를 두드리며 말했다. “이 중에서 다시 손 본 건 저거 하나뿐이야. 선택은 쉬워.”",
+      "“봐, 저 북 말이야. 오래돼 보이지만 누가 봐도 손질 흔적이 남아 있잖아.” 운석은 법고를 가리키며 말했다. “이 안에서 가장 먼저 눈에 띄는군. 저기서 단서를 찾아보자.”",
     npc_name: null,
     npc_dialogue: null,
-    quiz_question: "흥국사 범종각 내에서 '이전에 있던 것을 수리하여 다시 배치'한 것은 무엇인가?",
+    quiz_question:
+      "흥국사 범종각 내에서 '이전에 있던 것을 수리하여 다시 배치'한 것은 무엇인가?",
     quiz_option1: "A. 법고",
     quiz_option2: "B. 흥국사",
     quiz_option3: "C. 종",
@@ -153,13 +212,14 @@ const gameData = [
       "전라남도 여수시 중흥동 흥국사에 위치한 범종각은 1988년 주지 명선에 의해 건립되었다. 이곳에는 금속 종과 함께 목제 법고가 있으며, 법고는 이전에 있던 것을 수리하여 다시 설치한 것이다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“은밀한 글귀가 있는 동종에 가서, 옛 연대를 새기는 이 종비문을 꿰뚫어 보라.”",
+    next_hint_text:
+      "“승병의 출정을 알리던 저 거대한 북, 법고대좌를 자세히 살펴보라.”",
     image: "/images/SCN001_5.jpeg",
   },
   {
-    step_id: "6",
+    step_id: "8",
     scenario_id: "SCN001",
-    sequence: 6,
+    sequence: 8,
     location_id: "68391c35ebaff406476cf4e5",
     location_name: "동종",
     background_text:
@@ -182,9 +242,9 @@ const gameData = [
     image: "/images/SCN001_6.jpg",
   },
   {
-    step_id: "7",
+    step_id: "9",
     scenario_id: "SCN001",
-    sequence: 7,
+    sequence: 9,
     location_id: "68391a17ebaff406476cf4ae",
     location_name: "법왕문",
     background_text:
@@ -193,67 +253,20 @@ const gameData = [
       "“‘법왕문’이라 적혀 있지만, 실제 기능은 다른 것 같아. 이 구조는 법당보다는 설법 누각에 가까워 보여.”",
     npc_name: null,
     npc_dialogue: null,
-    quiz_question: "이 전각의 또 다른 명칭은 무엇인가?",
-    quiz_option1: "A. 대웅전",
+    quiz_question:
+      "대웅전과 봉화루 사이에 있는 건물로 법당 대신 설법을 하기 위하여 지은 누각의 기능을 했던 전각의 이름은 무엇인가요?",
+    quiz_option1: "A. 범종각",
     quiz_option2: "B. 법왕문",
-    quiz_option3: "C. 보제루",
-    quiz_answer: "C. 보제루", // Modified
+    quiz_option3: "C. 일주문",
+    quiz_answer: "B. 법왕문", // Modified
     quiz_difficulty: "보통",
     culture_info:
       "흥국사 법왕문은 보제루, 즉 법당 대신 설법을 하기 위해 지어진 누각의 기능을 하던 전각이다. 실제로 법회를 열 때는 대웅전 전면에 괘불을 걸고, 이곳에 법단을 설치하여 설법을 진행했다고 전해진다. 흥국사에서는 ‘윗보제루’라고도 불린다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“출정을 알리는 북—법고대좌로 가라.”",
+    next_hint_text:
+      "“법의 권위를 보았으니, 이제 부처님의 자비가 깃든 흥국사의 중심, 대웅전으로 향하라.”",
     image: "/images/SCN001_7.jpeg",
-  },
-  {
-    step_id: "8",
-    scenario_id: "SCN001",
-    sequence: 8,
-    location_id: "683919c4ebaff406476cf4a3",
-    location_name: "법고대좌",
-    background_text:
-      "험상궂은 사자 형상이 새겨진 석조 대좌 위에, 거대한 북이 단단히 고정되어 있었다. 강렬한 햇살이 대좌를 스치자, 운석은 본능적으로 그 위엄을 느꼈다. 그는 천천히 걸음을 옮기더니 북을 향해 손을 뻗었다.",
-    situation_text: "“이거야말로 전장의 북소리! 누가 뭐래도 이건 법고지.” 운석이 자부하듯 말했다.",
-    npc_name: null,
-    npc_dialogue: null,
-    quiz_question: "이 사자형 대좌가 받치고 있는 전각의 불전 사물은?",
-    quiz_option1: "A. 범종",
-    quiz_option2: "B. 법고",
-    quiz_option3: "C. 목어",
-    quiz_answer: "B. 법고", // Modified
-    quiz_difficulty: "보통",
-    culture_info:
-      "전라남도 여수시 중흥동 흥국사 범종각에 있는 조선 후기 법고 대좌로, 사자 모양으로 조각된 석조대좌가 대형 법고를 힘차게 떠받치고 있다. 법고는 사찰의 일과 시작이나 의식을 알릴 때 사용되는 중요한 불전 사물 중 하나이다.",
-    reward_text: null,
-    reward_effect: null,
-    next_hint_text: "“대웅전으로 행진하라.”",
-    image: "/images/SCN001_8.jpeg",
-  },
-  {
-    step_id: "9",
-    scenario_id: "SCN001",
-    sequence: 9,
-    location_id: "683917dfebaff406476cf482",
-    location_name: "대웅전",
-    background_text:
-      "대웅전의 문이 열리자 은은한 향 냄새와 함께 장엄한 석가삼존불의 모습이 나타났다. 고요한 공간 속, 세 아이는 자연스레 숨을 죽였고, 법당 한켠에 앉아 있던 주지 스님이 고개를 들었다.",
-    situation_text:
-      "“부처님의 자비 속에 진리가 있지. 이곳을 제대로 바라볼 수 있다면, 너희도 곧 그 비급을 얻게 될 것이다.” 스님의 말에 지환은 불상을 향해 조심스레 다가갔다.",
-    npc_name: "주지 스님",
-    npc_dialogue: "“이 법당에서 가장 중요한 존재를 찾아보거라. 눈에 보이는 것뿐 아니라, 마음으로도 보아야 하느니라.”",
-    quiz_question: "이 법당에서 모시고 있는 부처님 상의 이름은 무엇인가?",
-    quiz_option1: "A. 단청",
-    quiz_option2: "B. 탱화",
-    quiz_option3: "C. 석가 삼존불",
-    quiz_answer: "C. 석가 삼존불", // Modified
-    quiz_difficulty: "상",
-    culture_info:
-      "대웅전은 1624년(인조 2)에 계특대사가 절을 중수하면서 다시 지은 건물로, 석가삼존불을 모시고 있는 흥국사의 중심 법당이다. 조선시대 사찰에서 가장 일반적으로 조성된 불전 유형 중 하나이며, 정면 단청과 내부 탱화, 벽화는 예술적 가치가 뛰어나다.",
-    reward_text: "비급 획득(전): 고요한 호흡법",
-    reward_effect: "짧은 참선 모드 진입 시 → ‘평정 상태’ 부여 (차분한 마음으로 단서를 찾는 데 도움을 준다.)",
-    next_hint_text: "“이제 두 번째 비급을 찾아나서도록. 지장보살의 지혜를 모아라. 무사전 복장유물을 살펴보거라.”",
-    image: "/images/SCN001_9.jpeg",
   },
   {
     step_id: "10",
@@ -263,10 +276,12 @@ const gameData = [
     location_name: "무사전",
     background_text:
       "세 아이는 무사전 내부로 발걸음을 옮겼다. 오래된 목조 불상들이 조심스럽게 안치된 그곳, 연우는 복장 안 유물 목록을 기록한 문서를 유심히 들여다보았다. 기록된 이름들 사이에서 조선 중기라는 연대와 관련된 단서를 찾아내며, 그는 작은 탄성을 내뱉었다.",
-    situation_text: "“지장보살, 시왕상… 그렇다면 이 삼존상의 정식 명칭은…!” 연우가 조심스럽게 입을 열었다.",
+    situation_text:
+      "“지장보살, 시왕상… 그렇다면 이 삼존상의 정식 명칭은…!” 연우가 조심스럽게 입을 열었다.",
     npc_name: null,
     npc_dialogue: null,
-    quiz_question: "조선 중기에 조성된 이 복장유물 삼존상·시왕상의 정식 명칭은 무엇인가?",
+    quiz_question:
+      "조선 중기에 조성된 이 복장유물 삼존상·시왕상의 정식 명칭은 무엇인가?",
     quiz_option1: "A. 목조아미타삼존상",
     quiz_option2: "B. 목조지장보살삼존상",
     quiz_option3: "C. 목조관세음삼존상",
@@ -276,7 +291,8 @@ const gameData = [
       "전라남도 여수시 중흥동 흥국사 무사전에 봉안된 조선 중기의 삼존상과 시왕상 조각군으로, 현재는 의승수군유물전시관에 보관되어 있다. 중심의 지장보살과 양측의 권속 시왕상이 조화를 이루며 불교적 사후 세계관을 반영한다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“선배 승병들이 사용한 강력한 결전 무기를 찾아 의승수군유물전시관으로 가라.”",
+    next_hint_text:
+      "“선배 승병들이 사용한 강력한 결전 무기를 찾아 의승수군유물전시관으로 가라.”",
     image: "/images/SCN001_10.jpeg",
   },
   {
@@ -310,6 +326,34 @@ const gameData = [
     step_id: "12",
     scenario_id: "SCN001",
     sequence: 12,
+    location_id: "683917dfebaff406476cf482",
+    location_name: "대웅전",
+    background_text:
+      "법왕문을 지나자 드디어 흥국사의 중심, 대웅전이 모습을 드러냈다. 은은한 향 냄새와 함께 장엄한 석가삼존불의 모습이 나타났다. 고요한 공간 속, 세 아이는 자연스레 숨을 죽였고, 법당 한켠에 앉아 있던 주지 스님이 고개를 들었다.",
+    situation_text:
+      "“부처님의 자비 속에 진리가 있지. 이곳을 제대로 바라볼 수 있다면, 너희도 곧 그 비급을 얻게 될 것이다.” 스님의 말에 지환은 불상을 향해 조심스레 다가갔다.",
+    npc_name: "주지 스님",
+    npc_dialogue:
+      "“이 법당에서 가장 중요한 존재를 찾아보거라. 눈에 보이는 것뿐 아니라, 마음으로도 보아야 하느니라.”",
+    quiz_question: "이 법당에서 모시고 있는 부처님 상의 이름은 무엇인가?",
+    quiz_option1: "A. 단청",
+    quiz_option2: "B. 탱화",
+    quiz_option3: "C. 석가 삼존불",
+    quiz_answer: "C. 석가 삼존불", // Modified
+    quiz_difficulty: "상",
+    culture_info:
+      "대웅전은 1624년(인조 2)에 계특대사가 절을 중수하면서 다시 지은 건물로, 석가삼존불을 모시고 있는 흥국사의 중심 법당이다. 조선시대 사찰에서 가장 일반적으로 조성된 불전 유형 중 하나이며, 정면 단청과 내부 탱화, 벽화는 예술적 가치가 뛰어나다.",
+    reward_text: "비급 획득(전): 고요한 호흡법",
+    reward_effect:
+      "짧은 참선 모드 진입 시 → ‘평정 상태’ 부여 (차분한 마음으로 단서를 찾는 데 도움을 준다.)",
+    next_hint_text:
+      "“첫 비급을 얻었으니, 이제 두 번째 비급의 단서를 찾아나서라. 지장보살의 지혜가 깃든 무사전으로 향하여 복장유물을 살펴보거라.”",
+    image: "/images/SCN001_9.jpeg",
+  },
+  {
+    step_id: "13",
+    scenario_id: "SCN001",
+    sequence: 13,
     location_id: "683910d0ebaff406476cf39f",
     location_name: "대웅전 (목조석가여래삼존상)",
     background_text:
@@ -317,29 +361,32 @@ const gameData = [
     situation_text:
       "“본존불이 가운데 있고, 좌우에 보살이 서 있는 이 구성을 뭐라고 부르더라…” 연우가 고개를 갸웃거리며 조심스레 입을 열었다.",
     npc_name: "주지스님",
-    npc_dialogue: "“마음을 비우고, 눈앞에 보이는 그대로를 받아들이거라. 형상이 말하는 바를 네가 먼저 느껴보아야 한다.”",
-    quiz_question: "본존불과 두 협시보살을 함께 모신 불상은 무엇을 뜻하는 명칭인가요?",
-    quiz_option1: "A. 삼존불",
-    quiz_option2: "B. 세 명의 나한을 그린 탱화",
-    quiz_option3: "C. 세 개의 탑을 일컫는 말",
-    quiz_answer: "A. 삼존불", // Modified
+    npc_dialogue:
+      "“마음을 비우고, 눈앞에 보이는 그대로를 받아들이거라. 형상이 말하는 바를 네가 먼저 느껴보아야 한다.”",
+    quiz_question: "대웅전의 석가삼존불 중에서 두 협시보살이 아닌 것은?",
+    quiz_option1: "A. 관세음보살",
+    quiz_option2: "B. 제화갈라보살",
+    quiz_option3: "C. 미륵보살",
+    quiz_answer: "A. 관세음보살", // Modified
     quiz_difficulty: "보통",
     culture_info:
       "전라남도 여수시 중흥동 흥국사에 있는 조선 중기의 삼존불로, 본존인 석가여래좌상을 중심으로 좌우에 제화갈라보살입상과 미륵보살입상이 배치되어 있다. 이러한 구성을 삼존불이라 하며, 불교에서 중요한 신앙 대상의 하나이다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“이제 석가모니불께서 전하는 지혜의 법문을 새겨야 한다. 뒤편 후불탱 앞으로 나아가라.”",
+    next_hint_text:
+      "“이제 석가모니불께서 전하는 지혜의 법문을 새겨야 한다. 뒤편 후불탱 앞으로 나아가라.”",
     image: "/images/SCN001_12.jpeg",
   },
   {
-    step_id: "13",
+    step_id: "14",
     scenario_id: "SCN001",
-    sequence: 13,
+    sequence: 14,
     location_id: "683910d0ebaff406476cf39f",
     location_name: "대웅전 (후불탱)",
     background_text:
       "후불탱 앞에 선 세 사람. 부처의 미소가 환히 빛나는 순간, 연우는 문득 몸이 따뜻해지는 기운을 느꼈다. 석가모니불의 형상에서 나오는 금빛 광휘는 세 사람의 가슴에 잔잔한 울림을 전하고 있었다.",
-    situation_text: "“이 그림 속 중심에 계신 부처님은 누구실까…” 운석이 진지하게 물었다.",
+    situation_text:
+      "“이 그림 속 중심에 계신 부처님은 누구실까…” 운석이 진지하게 물었다.",
     npc_name: null,
     npc_dialogue: null,
     quiz_question: "후불탱의 중앙에 그려진 주불(主佛)은 무엇인가?",
@@ -351,18 +398,45 @@ const gameData = [
     culture_info:
       "전라남도 여수시 흥국사 대웅전에 봉안된 조선 후기 불화인 영산회상도는 석가여래가 인도 영산에서 법화를 설하던 장면을 도설화한 그림이다. 『법화경』의 내용을 시각적으로 표현한 이 불화는 석가모니불을 중심으로 제자들과 여러 보살들이 배치되어 있으며, 법문과 지혜의 상징으로 기능한다.",
     reward_text: "심법 강화: 마음의 맑음",
-    reward_effect: "이후 모든 심문 및 선택지 상황에서 감정 제어 능력 +1 / 직관력 +1 효과를 얻는다.",
+    reward_effect:
+      "이후 모든 심문 및 선택지 상황에서 감정 제어 능력 +1 / 직관력 +1 효과를 얻는다.",
     next_hint_text: "“금빛 부처가 시험하니, 불조전으로 향하라.”",
     image: "/images/SCN001_13.jpg",
   },
   {
-    step_id: "14",
+    step_id: "15",
     scenario_id: "SCN001",
-    sequence: 14,
+    sequence: 15,
+    location_id: "68391a23ebaff406476cf4b2",
+    location_name: "관음보살벽화",
+    background_text:
+      "대웅전 뒤편 벽면을 따라가자, 마주한 벽화는 세 아이의 걸음을 멈추게 했다. 하얀 옷의 보살이 연꽃 위에 고요히 앉아 있었고, 벽에서 풍겨오는 온화한 기운이 공간을 감쌌다.",
+    situation_text:
+      "“이 느낌… 따뜻해.” 연우가 말하며 벽화에 한 발 다가섰다. “보살님이 우릴 보고 있는 것 같아….”",
+    npc_name: null,
+    npc_dialogue: null,
+    quiz_question: "관음보살벽화에서 보살이 앉아 있는 대좌는 어떤 모양인가요?",
+    quiz_option1: "A. 연꽃 대좌",
+    quiz_option2: "B. 구름 대좌",
+    quiz_option3: "C. 구름 위 괘불",
+    quiz_answer: "A. 연꽃 대좌", // Modified
+    quiz_difficulty: "중",
+    culture_info:
+      "전라남도 여수시 흥국사 대웅전 후벽에 그려진 조선 후기의 백의관음벽화는 일반적인 벽화와 달리 17장의 한지에 채색하여 벽에 부착하는 독특한 방식으로 제작되었다. 보살은 연꽃 위에 앉은 자태로 자비와 고요함을 상징한다.",
+    reward_text: null,
+    reward_effect: null,
+    next_hint_text:
+      "“연꽃 위 보살의 자비를 품었으니, 이제 물가에 비친 자비의 그림자, 수월관음도를 찾아 그 깊이를 헤아려라.”",
+    image: "/images/SCN001_15.jpg",
+  },
+  {
+    step_id: "16",
+    scenario_id: "SCN001",
+    sequence: 16,
     location_id: "683910d0ebaff406476cf3aa",
     location_name: "불조전",
     background_text:
-      "세 아이는 엄숙한 기운이 감도는 전각 안으로 들어섰다. 기둥 위에는 먼지에 덮인 현판이 걸려 있었고, 그 아래엔 조용히 앉아 있는 스님 조상들의 상이 줄지어 놓여 있었다.",
+      "후불탱의 빛을 뒤로하고, 세 아이는 엄숙한 기운이 감도는 전각 안으로 들어섰다. 기둥 위에는 먼지에 덮인 현판이 걸려 있었고, 그 아래엔 조용히 앉아 있는 스님 조상들의 상이 줄지어 놓여 있었다.",
     situation_text:
       "“이곳은 부처님이 아닌… 스승님들을 모신 곳이야.” 지환이 조심스럽게 말했다. 연우와 운석도 고개를 숙이며 그 위엄을 느꼈다.",
     npc_name: null,
@@ -377,58 +451,9 @@ const gameData = [
       "불조전은 불교의 큰 스승인 조사(祖師)들을 모시는 전각이다. 본래 흥국사의 암자인 청운암(靑雲庵) 경내에 있었으며, 1759년(영조 35) 괘불 탱화를 모셨던 기록의 후면 자료에서 청운암의 존재가 확인된다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“대웅전 뒤편 후벽으로 향하여 관음보살벽화를 보고 자비로움과 고요함을 깨달아라.”",
-    image: "/images/SCN001_14.jpeg",
-  },
-  {
-    step_id: "15",
-    scenario_id: "SCN001",
-    sequence: 15,
-    location_id: "68391a23ebaff406476cf4b2",
-    location_name: "관음보살벽화",
-    background_text:
-      "대웅전 뒤편 벽면을 따라가자, 마주한 벽화는 세 아이의 걸음을 멈추게 했다. 하얀 옷의 보살이 연꽃 위에 고요히 앉아 있었고, 벽에서 풍겨오는 온화한 기운이 공간을 감쌌다.",
-    situation_text: "“이 느낌… 따뜻해.” 연우가 말하며 벽화에 한 발 다가섰다. “보살님이 우릴 보고 있는 것 같아….”",
-    npc_name: null,
-    npc_dialogue: null,
-    quiz_question: "관음보살벽화에서 보살이 앉아 있는 대좌는 어떤 모양인가요?",
-    quiz_option1: "A. 연꽃 대좌",
-    quiz_option2: "B. 구름 대좌",
-    quiz_option3: "C. 구름 위 괘불",
-    quiz_answer: "A. 연꽃 대좌", // Modified
-    quiz_difficulty: "중",
-    culture_info:
-      "전라남도 여수시 흥국사 대웅전 후벽에 그려진 조선 후기의 백의관음벽화는 일반적인 벽화와 달리 17장의 한지에 채색하여 벽에 부착하는 독특한 방식으로 제작되었다. 보살은 연꽃 위에 앉은 자태로 자비와 고요함을 상징한다.",
-    reward_text: null,
-    reward_effect: null,
     next_hint_text:
-      "“보살의 연꽃 위 자비를 품었으니, 이제 물가에 비친 자비의 그림자를 찾아라 — 수월관음도를 살펴보거라.”",
-    image: "/images/SCN001_15.jpg",
-  },
-  {
-    step_id: "16",
-    scenario_id: "SCN001",
-    sequence: 16,
-    location_id: "68391a23ebaff406476cf4b3",
-    location_name: "수월관음도",
-    background_text:
-      "조용한 전각 안, 수월관음도 앞에 선 세 사람. 그림 속 관음보살은 맑은 물가 바위에 앉아 있었고, 그 주변은 잔잔한 빛으로 감싸였다.",
-    situation_text:
-      "“자비의 마음이 이렇게 생긴 거구나….” 연우는 속삭이듯 말했다. 그녀의 손끝이 떨릴 때, 그림 속에서 한 줄기 빛이 뻗어 나와 작은 활의 형상을 그렸다.",
-    npc_name: null,
-    npc_dialogue: null,
-    quiz_question: "‘수월관음도’에 중심이 되는 보살은 누구인가요?",
-    quiz_option1: "A. 미륵보살",
-    quiz_option2: "B. 지장보살",
-    quiz_option3: "C. 관음보살",
-    quiz_answer: "C. 관음보살", // Modified
-    quiz_difficulty: "중",
-    culture_info:
-      "전라남도 여수시 흥국사에 봉안된 조선 후기 관세음보살탱화로, 보살의 형상은 귀인의 모습으로 표현된다. 머리에는 보관을 쓰고 몸에는 천의와 군의를 착용하였으며, 귀걸이·팔찌·목걸이 등의 장신구를 지녔다. 손에는 연꽃이나 정병 등의 지물을 들고 있다.",
-    reward_text: "스킬 획득: ‘자비의 화살’",
-    reward_effect: "연우 전용 스킬. 감정이 흔들릴 때 집중을 돕고, 정화된 직감으로 퀴즈에서 숨은 단서를 꿰뚫는다.",
-    next_hint_text: "“네가 본 자비의 빛, 이제 법문의 깊이를 헤아려라 — 삼장보살도를 찾아라.”",
-    image: "/images/SCN001_16.jpg",
+      "“스승의 위엄을 보았으니, 이제 대웅전 뒤편으로 가 관음보살벽화에 담긴 자비의 마음을 느껴라.”",
+    image: "/images/SCN001_14.jpeg",
   },
   {
     step_id: "17",
@@ -452,13 +477,41 @@ const gameData = [
       "전라남도 여수시 흥국사 대웅전에 봉안된 조선 후기 삼장탱화로 삼장탱화(三藏幀畵)는 상계(上界)를 담당하는 천장(天藏) 보살, 음부(陰府)를 담당하는 지지(地持) 보살, 지옥을 담당하는 지장(地藏) 보살과 그 권속을 그린 탱화이다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“이제 자비의 손짓이 깃든 전각으로 나아가라 — 응진당을 찾아라.”",
+    next_hint_text:
+      "“이제 자비의 손짓이 깃든 전각으로 나아가라 — 응진당을 찾아라.”",
     image: "/images/SCN001_17.jpg",
   },
   {
     step_id: "18",
     scenario_id: "SCN001",
     sequence: 18,
+    location_id: "68391a23ebaff406476cf4b3",
+    location_name: "수월관음도",
+    background_text:
+      "조용한 전각 안, 수월관음도 앞에 선 세 사람. 그림 속 관음보살은 맑은 물가 바위에 앉아 있었고, 그 주변은 잔잔한 빛으로 감싸였다.",
+    situation_text:
+      "“자비의 마음이 이렇게 생긴 거구나….” 연우는 속삭이듯 말했다. 그녀의 손끝이 떨릴 때, 그림 속에서 한 줄기 빛이 뻗어 나와 작은 활의 형상을 그렸다.",
+    npc_name: null,
+    npc_dialogue: null,
+    quiz_question: "‘수월관음도’에 중심이 되는 보살은 누구인가요?",
+    quiz_option1: "A. 미륵보살",
+    quiz_option2: "B. 지장보살",
+    quiz_option3: "C. 관음보살",
+    quiz_answer: "C. 관음보살", // Modified
+    quiz_difficulty: "중",
+    culture_info:
+      "전라남도 여수시 흥국사에 봉안된 조선 후기 관세음보살탱화로, 보살의 형상은 귀인의 모습으로 표현된다. 머리에는 보관을 쓰고 몸에는 천의와 군의를 착용하였으며, 귀걸이·팔찌·목걸이 등의 장신구를 지녔다. 손에는 연꽃이나 정병 등의 지물을 들고 있다.",
+    reward_text: "스킬 획득: ‘자비의 화살’",
+    reward_effect:
+      "연우 전용 스킬. 감정이 흔들릴 때 집중을 돕고, 정화된 직감으로 퀴즈에서 숨은 단서를 꿰뚫는다.",
+    next_hint_text:
+      "“자비의 빛으로 새로운 힘을 얻었으니, 이제 법문의 깊이를 헤아릴 차례다. 삼장보살도를 찾아라.”",
+    image: "/images/SCN001_16.jpg",
+  },
+  {
+    step_id: "19",
+    scenario_id: "SCN001",
+    sequence: 19,
     location_id: "68391a23ebaff406476cf4b5",
     location_name: "응진당",
     background_text:
@@ -481,12 +534,13 @@ const gameData = [
     image: "/images/SCN001_18.jpeg",
   },
   {
-    step_id: "19",
+    step_id: "20",
     scenario_id: "SCN001",
-    sequence: 19,
+    sequence: 20,
     location_id: "68391a23ebaff406476cf4b5",
     location_name: "응진당 (십육나한도)",
-    background_text: "응진당 깊숙이 들어선 세 사람 앞, 수묵의 기운이 감도는 벽화 앞에서 운석이 다시 입을 열었다.",
+    background_text:
+      "응진당 깊숙이 들어선 세 사람 앞, 수묵의 기운이 감도는 벽화 앞에서 운석이 다시 입을 열었다.",
     situation_text:
       "“이 벽화... 숫자가 맞지 않아. 원래 이 나한들이 몇 명이었는지 알아야 해.”<br>지환은 조심스럽게 손가락으로 벽화를 따라 세고, 연우는 옆에서 조용히 수첩을 꺼내 적는다.",
     npc_name: null,
@@ -501,33 +555,9 @@ const gameData = [
       "응진당(應眞堂)에 있는 십육나한도로, 나한은 아라한이라고도 하는데 수행을 거쳐 깨달은 성자를 말한다. 십육나한탱화는 중앙의 영산회상탱은 없어지고 지금은 나한도 여섯 폭만이 남아 전해져 오고 있는데, 조선 시대 3대 불모(佛母 : 탱화와 같은 불화를 그리는 사람)인 의겸(義謙)의 작품으로 1723년(경종 3)에 제작되었다. 현재 진품은 흥국사 의승수군 유물 전시관에 보관되어 있다.",
     reward_text: null,
     reward_effect: null,
-    next_hint_text: "“부도탑 앞 비문에 새겨진 역사의 연대를 읽어내라.”",
+    next_hint_text:
+      "“깨달은 자들의 흔적은 부도탑에 남아있다. 그곳 비문에 새겨진 역사의 연대를 읽어내라.”",
     image: "/images/SCN001_19.jpeg",
-  },
-  {
-    step_id: "20",
-    scenario_id: "SCN001",
-    sequence: 20,
-    location_id: "68391b8febaff406476cf4b6",
-    location_name: "부도탑",
-    background_text:
-      "부도탑 앞에 선 세 사람은 바람에 흩날리는 낙엽처럼 고요한 정적에 잠겼다. 회색빛 승탑들이 늘어서 있는 모습은 마치 묵묵히 진리를 지키는 스승들 같았다.",
-    situation_text:
-      "지환이 탑 하나하나를 손가락으로 세며 중얼거렸다.<br>“시대도 다 다르고, 형태도 조금씩 달라. 이 탑군에는 모두 몇 기의 승탑이 있을까?”<br>연우는 노트를 꺼내 시별 특징을 적고, 운석은 각 탑의 모양을 살펴보며 입체적으로 공간을 이해한다.",
-    npc_name: null,
-    npc_dialogue: null,
-    quiz_question: "이 부도탑 탑군에는 총 몇 기의 승탑이 있나요?",
-    quiz_option1: "A. 10기",
-    quiz_option2: "B. 12기",
-    quiz_option3: "C. 15기",
-    quiz_answer: "B. 12기", // Modified
-    quiz_difficulty: "중",
-    culture_info:
-      "전라남도 여수시 중흥동 흥국사에 있는 조선 후기부터 일제 강점기에 세워진 승탑들을 모아 놓은 탑군으로 12기의 승탑은 석종형 3기 외에는 모두 구형 승탑으로 16세기에 2기, 17세기에 4기, 18세기에 3기, 19세기에 2기, 20세기에 1기가 건립되었다. 원래는 흥국사 관내 여러 곳에 산재해 있었으나 1986년 현재의 자리로 이건하였다.",
-    reward_text: null,
-    reward_effect: null,
-    next_hint_text: "“일곱 부처의 진리를 밝힌 팔상전으로 향하라.”",
-    image: "/images/SCN001_20.jpeg",
   },
   {
     step_id: "21",
@@ -540,7 +570,8 @@ const gameData = [
     situation_text:
       "부처님 앞을 조용히 닦고 있던 동자승 지성이 눈을 동그랗게 뜨며 말했다.<br>“참선 시간에 졸다가 전당의 중심에 모셔진 부처님, 석가모니불을 닦으며 청소하는 벌을 받아 수행중이야.”<br>운석이 웃으며 물었다. “그럼 혹시 이 불상이 누구신지 아는 거야?”<br>지성이 고개를 끄덕이며 말한다. “이분은 법을 설하시고 고행을 이겨내신 분이셔.”",
     npc_name: "지성",
-    npc_dialogue: "참선 시간에 졸다가 전당의 중심에 모셔진 부처님, 석가모니불을 닦으며 청소하는 벌을 받아 수행중이야.",
+    npc_dialogue:
+      "참선 시간에 졸다가 전당의 중심에 모셔진 부처님, 석가모니불을 닦으며 청소하는 벌을 받아 수행중이야.",
     quiz_question: "팔상전 본존불의 중심 불상은 무엇인가요?",
     quiz_option1: "A. 미륵불",
     quiz_option2: "B. 아미타불",
@@ -552,7 +583,8 @@ const gameData = [
     reward_text: "스킬 획득: 팔상의 여의주",
     reward_effect:
       "지환 전용 스킬. 길찾기 혹은 분기 선택 시 → ‘확신의 길잡이’ 발동 (복잡한 사찰 내 동선, 숨겨진 지름길 등에 직감적으로 성공 확률이 크게 높아진다.)",
-    next_hint_text: "“중수사적비로 향하라. 그 돌 위에 새겨진 역사의 흔적을 읽어내야 하느니라.”",
+    next_hint_text:
+      "“중수사적비로 향하라. 그 돌 위에 새겨진 역사의 흔적을 읽어내야 하느니라.”",
     image: "/images/SCN001_21.jpeg",
   },
   {
@@ -590,7 +622,8 @@ const gameData = [
       "조용한 건물 안, 해가 뉘엿뉘엿 기울며 벽에 길게 그림자를 드리운다. 바닥엔 작은 금속 그릇과 차 도구들이 가지런히 놓여 있고, 기둥 위에는 별을 새긴 작은 부조가 있다.",
     situation_text:
       "“이곳은 노전이라 했지… 차를 달여 올리는 공간이래.” 연우가 차도구를 살펴본다.<br>지환은 벽에 드리운 그림자를 바라보며 중얼거린다. “시간을 잴 수 있다는 건… 마치 별을 보는 느낌이야.”<br>운석이 고개를 끄덕이며 맞장구친다. “그래서 여길 ‘첨성각’이라 부르기도 한 거구나. 해와 별, 시간의 흐름이 다 담겨 있었던 거야.”<br>지성은 옆에서 고개를 끄덕이며 말했다. “선배들이 해를 따라 차를 달이고 별을 보며 기도를 올린 이유가 있었구나…”",
-    quiz_question: "시간을 알려 주는 기능 때문에 해동선관이 붙은 또 다른 이름은 무엇인가요?",
+    quiz_question:
+      "시간을 알려 주는 기능 때문에 해동선관이 붙은 또 다른 이름은 무엇인가요?",
     quiz_option1: "A. 첨성각",
     quiz_option2: "B. 시계각",
     quiz_option3: "C. 해시계당",
@@ -599,8 +632,10 @@ const gameData = [
     culture_info:
       "전라남도 여수시 중흥동 흥국사에 있는 조선 후기 요사채로 해동선관은 시자(侍者)가 차를 달여 부처님께 공양하는 곳이라는 의미의 노전(爐殿)으로, 이곳에서 절의 대중들에게 시간을 알려 주기 때문에 첨성각(瞻星閣)이라고도 하였다.",
     reward_text: "감각 각성: ‘시간의 흐름을 읽는 눈’",
-    reward_effect: "숨겨진 루트 혹은 이벤트의 시간 조건(낮/밤, 특정 시각)을 직관적으로 감지할 수 있게 된다.",
-    next_hint_text: "“별을 보고 시간을 헤아렸듯, 이제 산길을 넘어 조월암으로 향하라. 그곳에서 밤하늘처럼 깊은 고요 속의 지혜를 찾아라.”",
+    reward_effect:
+      "숨겨진 루트 혹은 이벤트의 시간 조건(낮/밤, 특정 시각)을 직관적으로 감지할 수 있게 된다.",
+    next_hint_text:
+      "“별을 보고 시간을 헤아렸듯, 이제 산길을 넘어 조월암으로 향하라. 그곳에서 밤하늘처럼 깊은 고요 속의 지혜를 찾아라.”",
     image: "/images/SCN001_23.jpeg",
   },
   {
@@ -624,8 +659,10 @@ const gameData = [
     culture_info:
       "흥국사 조월암은 흥국사의 중심 공간과 따로 떨어져서 지어진 암자이다. 사찰 중심 공간의 오른쪽 계곡 건너 산정에 조용히 자리하고 있다.",
     reward_text: "정신력 회복: ‘고요의 숨결’",
-    reward_effect: "이전 스텝에서 소비한 단서를 되짚을 수 있게 되며, 한 번의 오답 기회가 추가된다.",
-    next_hint_text: "“달빛 아래 고요를 얻었으니, 이제 흥국사의 심장부로 향하라. 적묵당에서 숨겨진 뜻을 밝혀라.”",
+    reward_effect:
+      "이전 스텝에서 소비한 단서를 되짚을 수 있게 되며, 한 번의 오답 기회가 추가된다.",
+    next_hint_text:
+      "“달빛 아래 고요를 얻었으니, 이제 흥국사의 심장부로 향하라. 적묵당에서 숨겨진 뜻을 밝혀라.”",
     image: "/images/SCN001_24.jpeg",
   },
   {
@@ -651,7 +688,8 @@ const gameData = [
     reward_text: "비급 업그레이드: 고요한 호흡법 (강화)",
     reward_effect:
       "• 효과: 짧은 참선 모드 진입 시 → ‘평정 상태’ 유지 + 전투 시에도 흔들림 없이 용맹함을 발휘하여 모든 긴급 상황에서 집중력과 담대함을 극대화한다.",
-    next_hint_text: "“적묵의 고요 속에 진리를 보았으니, 이제 물의 신비로 향하라. 선불장으로 가라.”",
+    next_hint_text:
+      "“적묵의 고요 속에 진리를 보았으니, 이제 물의 신비로 향하라. 선불장으로 가라.”",
     image: "/images/SCN001_25.jpeg",
   },
   {
@@ -665,8 +703,10 @@ const gameData = [
     situation_text:
       "운석이 앞장서 선불장 안으로 들어섰다. 그는 조용히 향로 앞에 앉아 눈을 감고 숨을 고른다. 지환과 연우도 그를 따라 자리에 앉는다. <br>“이곳은... 시험의 자리야.” 운석이 조용히 중얼였다. <br>잠시 후, 세 사람의 눈앞에 환영처럼 과거 수행자들의 모습이 스쳐 지나간다. 수행 중에 흔들리는 자, 고요 속에서 무너지는 자들. <br>운석이 입을 열었다. “이제... 너희의 눈을 빌려야겠어. 함께 봐줘.” <br>지환이 여의주를 손에 쥐고 집중했고, 연우는 마음을 다잡았다. 세 사람의 시선이 하나로 모인다.",
     npc_name: "운석",
-    npc_dialogue: "내 눈만으론 부족해. 너희의 직감과 통찰이 필요해. 함께라면… 이 환영을 꿰뚫을 수 있어.",
-    quiz_question: "부처를 선발하는 도량이란 의미를 가진 이 건물의 이름은 무엇인가요?",
+    npc_dialogue:
+      "내 눈만으론 부족해. 너희의 직감과 통찰이 필요해. 함께라면… 이 환영을 꿰뚫을 수 있어.",
+    quiz_question:
+      "부처를 선발하는 도량이란 의미를 가진 이 건물의 이름은 무엇인가요?",
     quiz_option1: "A. 황룡장",
     quiz_option2: "B. 선불장",
     quiz_option3: "C. 흥국장",
@@ -710,204 +750,239 @@ const gameData = [
       "“이제 너희는 나라의 수호자, 용의 전사다.”\n“너희 앞에 펼쳐질 위기 속에서, 이 힘이 길을 비추길.”\n“흥국사와 이 땅을 위해… 평화의 등불이 되어다오.”",
     image: "/images/SCN001_27.jpeg",
   },
-]
+];
 
-type GameScreen = "intro" | "opening" | "location" | "situation" | "quiz" | "result" | "reward" | "ending"
+type GameScreen =
+  | "intro"
+  | "opening"
+  | "location"
+  | "situation"
+  | "quiz"
+  | "result"
+  | "reward"
+  | "ending";
 
 interface PlayerPowers {
-  firstSecret: boolean // 고요한 호흡법 (심법)
-  secondSecret: boolean // 전사의 무기 3종 (무기)
-  finalSecret: boolean // 용의 비급 (최종 비급)
+  firstSecret: boolean; // 고요한 호흡법 (심법)
+  secondSecret: boolean; // 전사의 무기 3종 (무기)
+  finalSecret: boolean; // 용의 비급 (최종 비급)
 }
 
 // `onGameEnd` prop의 타입 정의를 업데이트합니다.
 interface HeungguksaAdventureGameProps {
-  onGameEnd: (gameId: string, gameName: string, status: "completed" | "exited") => void // Updated prop type
+  onGameEnd: (
+    gameId: string,
+    gameName: string,
+    status: "completed" | "exited"
+  ) => void; // Updated prop type
 }
 
-export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventureGameProps) {
-  const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro")
-  const [currentStepIndex, setCurrentStepIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState<string>("")
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false)
+export default function HeungguksaAdventureGame({
+  onGameEnd,
+}: HeungguksaAdventureGameProps) {
+  const [currentScreen, setCurrentScreen] = useState<GameScreen>("intro");
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string>("");
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
   const [playerPowers, setPlayerPowers] = useState<PlayerPowers>({
     firstSecret: false,
     secondSecret: false,
     finalSecret: false,
-  })
-  const [gameStarted, setGameStarted] = useState(false)
+  });
+  const [gameStarted, setGameStarted] = useState(false);
 
-  const currentStep = gameData[currentStepIndex]
-  const progress = ((currentStepIndex + 1) / gameData.length) * 100
+  const currentStep = gameData[currentStepIndex];
+  const progress = ((currentStepIndex + 1) / gameData.length) * 100;
 
   const handleStartGame = () => {
-    setGameStarted(true)
-    setCurrentScreen("opening")
-  }
+    setGameStarted(true);
+    setCurrentScreen("opening");
+  };
 
   const handleAcceptQuest = () => {
-    setCurrentScreen("location")
-  }
+    setCurrentScreen("location");
+  };
 
   const handleLocationNext = () => {
-    setCurrentScreen("situation")
-  }
+    setCurrentScreen("situation");
+  };
 
   const handleSituationNext = () => {
-    setCurrentScreen("quiz")
-  }
+    setCurrentScreen("quiz");
+  };
 
   const handleQuizAnswer = (answer: string) => {
-    setSelectedAnswer(answer)
-    const correct = answer === currentStep.quiz_answer
-    setIsCorrectAnswer(correct)
-    setCurrentScreen("result")
-  }
+    setSelectedAnswer(answer);
+    const correct = answer === currentStep.quiz_answer;
+    setIsCorrectAnswer(correct);
+    setCurrentScreen("result");
+  };
 
   const handleResultNext = () => {
     if (isCorrectAnswer) {
       // 능력 획득 로직
       setPlayerPowers((prevPowers) => {
-        const newPowers = { ...prevPowers }
+        const newPowers = { ...prevPowers };
         switch (currentStep.step_id) {
           case "9": // 비급 획득(전): 고요한 호흡법
-            newPowers.firstSecret = true
-            break
+            newPowers.firstSecret = true;
+            break;
           case "11": // 전사의 무기 3종 획득
-            newPowers.secondSecret = true
-            break
+            newPowers.secondSecret = true;
+            break;
           case "27": // 최종 비급 획득: 용의 비급
-            newPowers.finalSecret = true
-            break
+            newPowers.finalSecret = true;
+            break;
         }
-        return newPowers
-      })
+        return newPowers;
+      });
 
       // 마지막 스텝인지 확인
       if (currentStepIndex === gameData.length - 1) {
-        setCurrentScreen("ending")
+        setCurrentScreen("ending");
       } else {
-        setCurrentScreen("reward")
+        setCurrentScreen("reward");
       }
     } else {
-      setCurrentScreen("quiz")
+      setCurrentScreen("quiz");
     }
-  }
+  };
 
   const handleRewardNext = () => {
-    setCurrentStepIndex((prev) => prev + 1)
-    setCurrentScreen("location")
-    setSelectedAnswer("")
-  }
+    setCurrentStepIndex((prev) => prev + 1);
+    setCurrentScreen("location");
+    setSelectedAnswer("");
+  };
 
   const handleRetryQuiz = () => {
-    setSelectedAnswer("")
-    setCurrentScreen("quiz")
-  }
+    setSelectedAnswer("");
+    setCurrentScreen("quiz");
+  };
 
   // `handleRestart` 함수에서 `onGameEnd` 호출 시 게임 ID와 전체 이름을 전달합니다.
   const handleRestart = () => {
-    setCurrentStepIndex(0)
-    setCurrentScreen("intro")
-    setSelectedAnswer("")
-    setIsCorrectAnswer(false)
+    setCurrentStepIndex(0);
+    setCurrentScreen("intro");
+    setSelectedAnswer("");
+    setIsCorrectAnswer(false);
     setPlayerPowers({
       firstSecret: false,
       secondSecret: false,
       finalSecret: false,
-    })
-    setGameStarted(false)
-    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "completed") // 게임 ID와 전체 이름 전달
-  }
+    });
+    setGameStarted(false);
+    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "completed"); // 게임 ID와 전체 이름 전달
+  };
 
   // `handleExitGame` 함수에서 `onGameEnd` 호출 시 게임 ID와 전체 이름을 전달합니다.
   const handleExitGame = () => {
-    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "exited") // 게임 ID와 전체 이름 전달
-  }
+    onGameEnd("heungguksa", "흥국사에 숨겨진 무공비급을 찾아라", "exited"); // 게임 ID와 전체 이름 전달
+  };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "하":
-        return "bg-green-100 text-green-800 border-green-200"
+        return "bg-green-100 text-green-800 border-green-200";
       case "보통":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200"
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
       case "중":
-        return "bg-orange-100 text-orange-800 border-orange-200"
+        return "bg-orange-100 text-orange-800 border-orange-200";
       case "상":
-        return "bg-red-100 text-red-800 border-red-200"
+        return "bg-red-100 text-red-800 border-red-200";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-200"
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
-  }
+  };
 
-  const PowerIcon = ({ power, active }: { power: keyof PlayerPowers; active: boolean }) => {
+  const PowerIcon = ({
+    power,
+    active,
+  }: {
+    power: keyof PlayerPowers;
+    active: boolean;
+  }) => {
     const icons = {
       firstSecret: BookOpen,
       secondSecret: Swords,
       finalSecret: Zap,
-    }
-    const Icon = icons[power]
+    };
+    const Icon = icons[power];
     return (
       <div
-        className={`p-2 rounded-full transition-colors duration-200 ${active ? "bg-amber-200 text-amber-800 shadow-md" : "bg-gray-200 text-gray-500"}`}
+        className={`p-2 rounded-full transition-colors duration-200 ${
+          active
+            ? "bg-amber-200 text-amber-800 shadow-md"
+            : "bg-gray-200 text-gray-500"
+        }`}
       >
         <Icon className="w-5 h-5" />
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-100 via-amber-50 to-stone-200 p-4 font-sans">
       <div className="max-w-lg mx-auto">
         {/* 헤더와 진행률 */}
-        {gameStarted && currentScreen !== "intro" && currentScreen !== "ending" && (
-          <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
-            <CardContent className="p-4 space-y-3">
-              <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold text-stone-800 flex items-center gap-2">
-                  <ScrollText className="w-6 h-6 text-amber-600" />
-                  흥국사에 숨겨진 무공비급을 찾아라
-                </h1>
-                <div className="flex items-center gap-2">
-                  <div className="text-sm text-amber-700 bg-amber-100 px-3 py-1 rounded-full font-semibold">
-                    {currentStepIndex + 1} / {gameData.length}
+        {gameStarted &&
+          currentScreen !== "intro" &&
+          currentScreen !== "ending" && (
+            <Card className="mb-6 border-none shadow-lg bg-white/90 backdrop-blur-sm">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex justify-between items-center">
+                  <h1 className="text-xl font-bold text-stone-800 flex items-center gap-2">
+                    <ScrollText className="w-6 h-6 text-amber-600" />
+                    흥국사에 숨겨진 무공비급을 찾아라
+                  </h1>
+                  <div className="flex items-center gap-2">
+                    <div className="text-sm text-amber-700 bg-amber-100 px-3 py-1 rounded-full font-semibold">
+                      {currentStepIndex + 1} / {gameData.length}
+                    </div>
+                    <Button
+                      onClick={handleExitGame}
+                      variant="ghost"
+                      size="sm"
+                      className="text-stone-500 hover:text-stone-700 p-1"
+                    >
+                      <LogOut className="w-5 h-5" />
+                    </Button>
                   </div>
-                  <Button
-                    onClick={handleExitGame}
-                    variant="ghost"
-                    size="sm"
-                    className="text-stone-500 hover:text-stone-700 p-1"
-                  >
-                    <LogOut className="w-5 h-5" />
-                  </Button>
                 </div>
-              </div>
-              <Progress
-                value={progress}
-                className="h-2 bg-stone-300 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-amber-500 [&::-webkit-progress-value]:to-orange-500"
-              />
+                <Progress
+                  value={progress}
+                  className="h-2 bg-stone-300 [&::-webkit-progress-bar]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-r [&::-webkit-progress-value]:from-amber-500 [&::-webkit-progress-value]:to-orange-500"
+                />
 
-              {/* 플레이어 능력 */}
-              <div className="flex gap-3 justify-center pt-2">
-                <div className="flex items-center gap-1 text-sm text-stone-600">
-                  <BookOpen className="w-4 h-4 text-amber-600" />
-                  <span className="font-medium">고요한 호흡법:</span>
-                  <PowerIcon power="firstSecret" active={playerPowers.firstSecret} />
+                {/* 플레이어 능력 */}
+                <div className="flex gap-3 justify-center pt-2">
+                  <div className="flex items-center gap-1 text-sm text-stone-600">
+                    <BookOpen className="w-4 h-4 text-amber-600" />
+                    <span className="font-medium">고요한 호흡법:</span>
+                    <PowerIcon
+                      power="firstSecret"
+                      active={playerPowers.firstSecret}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-stone-600">
+                    <Swords className="w-4 h-4 text-amber-600" />
+                    <span className="font-medium">전사의 무기:</span>
+                    <PowerIcon
+                      power="secondSecret"
+                      active={playerPowers.secondSecret}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-stone-600">
+                    <Zap className="w-4 h-4 text-amber-600" />
+                    <span className="font-medium">용의 비급:</span>
+                    <PowerIcon
+                      power="finalSecret"
+                      active={playerPowers.finalSecret}
+                    />
+                  </div>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-stone-600">
-                  <Swords className="w-4 h-4 text-amber-600" />
-                  <span className="font-medium">전사의 무기:</span>
-                  <PowerIcon power="secondSecret" active={playerPowers.secondSecret} />
-                </div>
-                <div className="flex items-center gap-1 text-sm text-stone-600">
-                  <Zap className="w-4 h-4 text-amber-600" />
-                  <span className="font-medium">용의 비급:</span>
-                  <PowerIcon power="finalSecret" active={playerPowers.finalSecret} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+              </CardContent>
+            </Card>
+          )}
 
         {/* 게임 화면들 */}
         <Card className="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-amber-200">
@@ -933,8 +1008,8 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <div>
                       <strong className="text-green-700">지환:</strong>
                       <p>
-                        흥국사 승병 훈련소에 입소한 어린 동자승. 훈련 성적은 낮지만, 조국을 향한 열정만큼은 누구보다
-                        뜨겁다.
+                        흥국사 승병 훈련소에 입소한 어린 동자승. 훈련 성적은
+                        낮지만, 조국을 향한 열정만큼은 누구보다 뜨겁다.
                       </p>
                     </div>
                   </div>
@@ -943,8 +1018,8 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <div>
                       <strong className="text-blue-700">운석:</strong>
                       <p>
-                        무예 실력이 뛰어나지만 성급하고 직선적인 성격의 동자승. 지환을 늘 놀리지만, 위기 앞에선 누구보다
-                        의리가 있다.
+                        무예 실력이 뛰어나지만 성급하고 직선적인 성격의 동자승.
+                        지환을 늘 놀리지만, 위기 앞에선 누구보다 의리가 있다.
                       </p>
                     </div>
                   </div>
@@ -952,7 +1027,10 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <span className="text-2xl">📚</span>
                     <div>
                       <strong className="text-indigo-700">연우:</strong>
-                      <p>차분하고 지혜로운 전략가형 동자승. 문서와 불경 속에서 무공의 비밀을 먼저 깨우친다.</p>
+                      <p>
+                        차분하고 지혜로운 전략가형 동자승. 문서와 불경 속에서
+                        무공의 비밀을 먼저 깨우친다.
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -960,8 +1038,8 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <div>
                       <strong className="text-red-700">이준:</strong>
                       <p>
-                        고려 말 삼별초 소속으로 몽골과 맞서 싸운 전사. 흥국사에 세 가지 무공 비급을 남기고 전인의 등장을
-                        기다려왔다.
+                        고려 말 삼별초 소속으로 몽골과 맞서 싸운 전사. 흥국사에
+                        세 가지 무공 비급을 남기고 전인의 등장을 기다려왔다.
                       </p>
                     </div>
                   </div>
@@ -974,12 +1052,16 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                   시나리오 개요
                 </h3>
                 <p className="text-sm leading-relaxed text-stone-700">
-                  조선, 임진왜란의 한복판. 스님들 역시 애국의 마음으로 왜군에 대항하며 흥국사에 승병 훈련소를 세우고
-                  후계를 길러내기 시작했다. 이곳에는 서로 다른 개성을 지닌 어린 동자승 세 명이 입소해 있었다. 열정
-                  하나로 버텨온 말단 훈련생 지환, 칼보다 빠른 성미의 실력자 운석, 책을 가까이하며 지략을 쌓는 연우.
-                  그러던 어느 날 밤, 훈련장 깊은 곳에서 들려온 환영의 목소리. "나라가 혼란에 빠졌을 때, 흥국사에 남긴
-                  무공 비급을 찾는 자만이 전인의 자격을 얻을 것이다." 세 명의 동자승은 서로 견제하며, 때로는 협력하면서
-                  비급을 향한 수련과 모험의 여정을 시작한다.
+                  조선, 임진왜란의 한복판. 스님들 역시 애국의 마음으로 왜군에
+                  대항하며 흥국사에 승병 훈련소를 세우고 후계를 길러내기
+                  시작했다. 이곳에는 서로 다른 개성을 지닌 어린 동자승 세 명이
+                  입소해 있었다. 열정 하나로 버텨온 말단 훈련생 지환, 칼보다
+                  빠른 성미의 실력자 운석, 책을 가까이하며 지략을 쌓는 연우.
+                  그러던 어느 날 밤, 훈련장 깊은 곳에서 들려온 환영의 목소리.
+                  "나라가 혼란에 빠졌을 때, 흥국사에 남긴 무공 비급을 찾는
+                  자만이 전인의 자격을 얻을 것이다." 세 명의 동자승은 서로
+                  견제하며, 때로는 협력하면서 비급을 향한 수련과 모험의 여정을
+                  시작한다.
                 </p>
               </div>
 
@@ -997,20 +1079,25 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
                 <div className="text-6xl mb-4 text-red-500">👻</div>
-                <CardTitle className="text-2xl font-bold text-red-700">이준 전사</CardTitle>
+                <CardTitle className="text-2xl font-bold text-red-700">
+                  이준 전사
+                </CardTitle>
               </div>
 
               <div className="bg-red-50 p-6 rounded-xl space-y-4 border-l-4 border-red-400 shadow-inner">
                 <p className="text-sm leading-relaxed text-stone-800">
-                  “나의 전인들이여. 나는 고려 말, 몽골에 맞서 싸운 삼별초 전사 이준이다. 나라가 다시 위기에 빠질 날을
-                  대비해, 흥국사 곳곳에 세 가지 무공 비급을 숨겨 두었노라. 비급을 찾아 진정한 힘을 얻고, 조국을
-                  수호하라. 너희 셋 중 진정한 전인이 나올 수 있을지... 이제 시험이 시작된다.”
+                  “나의 전인들이여. 나는 고려 말, 몽골에 맞서 싸운 삼별초 전사
+                  이준이다. 나라가 다시 위기에 빠질 날을 대비해, 흥국사 곳곳에
+                  세 가지 무공 비급을 숨겨 두었노라. 비급을 찾아 진정한 힘을
+                  얻고, 조국을 수호하라. 너희 셋 중 진정한 전인이 나올 수
+                  있을지... 이제 시험이 시작된다.”
                 </p>
 
                 <div className="text-center p-4 bg-white rounded-lg border border-stone-200 shadow-sm">
                   <p className="font-bold text-red-800 flex items-center justify-center gap-2">
                     <Sparkles className="w-5 h-5 text-amber-500" />
-                    흥국사에 숨겨진 무공 비급을 찾는 여정을 세 동자승과 함께 떠나시겠습니까?
+                    흥국사에 숨겨진 무공 비급을 찾는 여정을 세 동자승과 함께
+                    떠나시겠습니까?
                   </p>
                 </div>
               </div>
@@ -1020,14 +1107,16 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                   onClick={handleAcceptQuest}
                   className="w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-4 px-6 rounded-xl font-bold hover:from-amber-700 hover:to-orange-700 transition-all duration-200 shadow-md transform hover:scale-105"
                 >
-                  <CheckCircle className="w-5 h-5 mr-2" /> 예, 세 동자승과 함께 비급을 찾아 나라를 지키겠습니다.
+                  <CheckCircle className="w-5 h-5 mr-2" /> 예, 세 동자승과 함께
+                  비급을 찾아 나라를 지키겠습니다.
                 </Button>
                 <Button
                   onClick={handleExitGame}
                   variant="outline"
                   className="w-full bg-stone-100 text-stone-700 py-3 px-6 rounded-xl font-medium hover:bg-stone-200 transition-all duration-200 border-stone-300"
                 >
-                  <XCircle className="w-5 h-5 mr-2" /> 아니오, 아직 수행할 준비가 되지 않았습니다.
+                  <XCircle className="w-5 h-5 mr-2" /> 아니오, 아직 수행할
+                  준비가 되지 않았습니다.
                 </Button>
               </div>
             </CardContent>
@@ -1054,7 +1143,8 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                 </div>
                 <div className="bg-amber-50 p-4 rounded-lg border border-amber-200 shadow-sm">
                   <p className="text-amber-800 font-semibold flex items-center justify-center gap-2">
-                    <Sparkles className="w-5 h-5 text-amber-600" /> 새로운 장소에 도착했습니다!
+                    <Sparkles className="w-5 h-5 text-amber-600" /> 새로운
+                    장소에 도착했습니다!
                   </p>
                 </div>
               </div>
@@ -1079,7 +1169,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                 <div className="bg-stone-50 p-5 rounded-xl border border-stone-200 shadow-inner">
                   <p
                     className="text-sm leading-relaxed text-stone-800"
-                    dangerouslySetInnerHTML={{ __html: currentStep.background_text }}
+                    dangerouslySetInnerHTML={{
+                      __html: currentStep.background_text,
+                    }}
                   ></p>
                 </div>
 
@@ -1088,7 +1180,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <div className="text-2xl">🧘</div>
                     <p
                       className="text-sm leading-relaxed text-stone-800"
-                      dangerouslySetInnerHTML={{ __html: currentStep.situation_text }}
+                      dangerouslySetInnerHTML={{
+                        __html: currentStep.situation_text,
+                      }}
                     ></p>
                   </div>
                 </div>
@@ -1098,10 +1192,14 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                     <div className="flex items-start gap-3">
                       <div className="text-2xl">🗣️</div>
                       <div>
-                        <p className="font-bold text-red-700 mb-2">{currentStep.npc_name}</p>
+                        <p className="font-bold text-red-700 mb-2">
+                          {currentStep.npc_name}
+                        </p>
                         <p
                           className="text-sm leading-relaxed text-stone-800"
-                          dangerouslySetInnerHTML={{ __html: currentStep.npc_dialogue }}
+                          dangerouslySetInnerHTML={{
+                            __html: currentStep.npc_dialogue,
+                          }}
                         ></p>
                       </div>
                     </div>
@@ -1123,7 +1221,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
             <CardContent className="p-8 space-y-6">
               <div className="text-center mb-6">
                 <div
-                  className={`inline-block px-4 py-2 rounded-full text-sm font-bold border-2 ${getDifficultyColor(currentStep.quiz_difficulty)}`}
+                  className={`inline-block px-4 py-2 rounded-full text-sm font-bold border-2 ${getDifficultyColor(
+                    currentStep.quiz_difficulty
+                  )}`}
                 >
                   난이도: {currentStep.quiz_difficulty}
                 </div>
@@ -1137,14 +1237,22 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
               </div>
 
               <div className="space-y-3">
-                {[currentStep.quiz_option1, currentStep.quiz_option2, currentStep.quiz_option3]
+                {[
+                  currentStep.quiz_option1,
+                  currentStep.quiz_option2,
+                  currentStep.quiz_option3,
+                ]
                   .filter(Boolean)
                   .map((option, index) => (
                     <Button
                       key={index}
                       onClick={() => handleQuizAnswer(option)}
                       variant="outline"
-                      className={`w-full text-left p-4 rounded-xl font-medium text-stone-800 border-2 ${selectedAnswer === option ? "border-amber-500 bg-amber-100 shadow-md" : "border-stone-200 bg-white hover:border-amber-400 hover:bg-amber-50"} transition-all duration-200`}
+                      className={`w-full text-left p-4 rounded-xl font-medium text-stone-800 border-2 ${
+                        selectedAnswer === option
+                          ? "border-amber-500 bg-amber-100 shadow-md"
+                          : "border-stone-200 bg-white hover:border-amber-400 hover:bg-amber-50"
+                      } transition-all duration-200`}
                     >
                       {option}
                     </Button>
@@ -1157,8 +1265,14 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
           {currentScreen === "result" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
-                <div className="text-8xl animate-pop-in">{isCorrectAnswer ? "🎉" : "❌"}</div>
-                <CardTitle className={`text-2xl font-bold ${isCorrectAnswer ? "text-green-600" : "text-red-600"}`}>
+                <div className="text-8xl animate-pop-in">
+                  {isCorrectAnswer ? "🎉" : "❌"}
+                </div>
+                <CardTitle
+                  className={`text-2xl font-bold ${
+                    isCorrectAnswer ? "text-green-600" : "text-red-600"
+                  }`}
+                >
                   {isCorrectAnswer ? "정답입니다!" : "오답입니다"}
                 </CardTitle>
               </div>
@@ -1168,7 +1282,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                   <h3 className="font-bold mb-3 text-blue-900 flex items-center gap-2">
                     <Book className="w-5 h-5 text-blue-600" /> 문화 정보
                   </h3>
-                  <p className="text-sm leading-relaxed text-stone-800">{currentStep.culture_info}</p>
+                  <p className="text-sm leading-relaxed text-stone-800">
+                    {currentStep.culture_info}
+                  </p>
                 </div>
               )}
 
@@ -1196,15 +1312,21 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
           {currentScreen === "reward" && currentStep && (
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
-                <div className="text-6xl text-amber-500 animate-pulse-once">✨</div>
-                <CardTitle className="text-2xl font-bold text-amber-600">보상 획득!</CardTitle>
+                <div className="text-6xl text-amber-500 animate-pulse-once">
+                  ✨
+                </div>
+                <CardTitle className="text-2xl font-bold text-amber-600">
+                  보상 획득!
+                </CardTitle>
               </div>
 
               {currentStep.reward_text && (
                 <div className="bg-amber-50 p-5 rounded-xl border-l-4 border-amber-400 shadow-sm">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">📜</div>
-                    <p className="text-sm leading-relaxed text-stone-800">{currentStep.reward_text}</p>
+                    <p className="text-sm leading-relaxed text-stone-800">
+                      {currentStep.reward_text}
+                    </p>
                   </div>
                 </div>
               )}
@@ -1224,7 +1346,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                 <div className="bg-green-50 p-5 rounded-xl border-l-4 border-green-400 shadow-sm">
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">💡</div>
-                    <p className="text-sm leading-relaxed text-stone-800">{currentStep.next_hint_text}</p>
+                    <p className="text-sm leading-relaxed text-stone-800">
+                      {currentStep.next_hint_text}
+                    </p>
                   </div>
                 </div>
               )}
@@ -1251,7 +1375,9 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
             <CardContent className="p-8 space-y-6">
               <div className="text-center space-y-4">
                 <div className="text-8xl animate-tada">🎊</div>
-                <CardTitle className="text-3xl font-bold text-stone-900">게임 완료!</CardTitle>
+                <CardTitle className="text-3xl font-bold text-stone-900">
+                  게임 완료!
+                </CardTitle>
               </div>
 
               <div className="space-y-4">
@@ -1259,15 +1385,22 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">👻</div>
                     <div className="space-y-3 text-sm text-stone-800">
-                      <p dangerouslySetInnerHTML={{ __html: gameData[gameData.length - 1].npc_dialogue || "" }}></p>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            gameData[gameData.length - 1].npc_dialogue || "",
+                        }}
+                      ></p>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-stone-50 p-6 rounded-xl text-center border border-stone-200 shadow-inner">
                   <p className="text-sm leading-relaxed text-stone-800">
-                    세 명의 동자승은 마침내 흥국사에 숨겨진 무공 비급을 모두 찾아 전인의 자격을 얻었다. 그들은 힘을 합쳐
-                    조국을 수호하는 진정한 전사로 거듭난다. 그들의 이름은 역사에 길이 남아 후대에 전해질 것이다.
+                    세 명의 동자승은 마침내 흥국사에 숨겨진 무공 비급을 모두
+                    찾아 전인의 자격을 얻었다. 그들은 힘을 합쳐 조국을 수호하는
+                    진정한 전사로 거듭난다. 그들의 이름은 역사에 길이 남아
+                    후대에 전해질 것이다.
                   </p>
                 </div>
 
@@ -1292,5 +1425,5 @@ export default function HeungguksaAdventureGame({ onGameEnd }: HeungguksaAdventu
         </Card>
       </div>
     </div>
-  )
+  );
 }

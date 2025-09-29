@@ -100,12 +100,12 @@ const gameData = [
     quiz_question:
       "중앙동 해양공원과 종포동 해양공원을 합쳐 만든 공원으로 한가롭게 산책을 즐기며 여수 밤바다를 감상할 수 있게 된 공원의 이름은 무엇인가요?",
     quiz_option1: "A. 종포마을",
-    quiz_option2: "B. 해양공원",
+    quiz_option2: "B. 여수해양공원과 종포해양공원",
     quiz_option3: "C. 낭만포차거리",
-    quiz_answer: "B. 해양공원",
+    quiz_answer: "B. 여수해양공원과 종포해양공원",
     quiz_difficulty: "중",
     culture_info:
-      "전라남도 여수시 중앙동 385-6번지 외 1필지인 중앙동 해양공원과 중앙동 246-1번지 외 4필지인 종포 해양공원을 합쳐 여수해양공원이라고 한다. 2016년 종포 해양공원 안에 낭만포차거리가 조성되었으나 관광객이 늘어나면서 교통체증과 각종 소음, 불법 쓰레기 투기가 문제가 되면서 2019년 거북선대교 아래로 이전하여, 한가롭게 산책을 즐기며 여수 밤바다를 감상할 수 있게 되었다.",
+      "전라남도 여수시 중앙동 385-6번지 외 1필지인 여수해양공원과 중앙동 246-1번지 외 4필지인 종포 해양공원을 합쳐 여수해양공원이라고 한다. 2016년 종포 해양공원 안에 낭만포차거리가 조성되었으나 관광객이 늘어나면서 교통체증과 각종 소음, 불법 쓰레기 투기가 문제가 되면서 2019년 거북선대교 아래로 이전하여, 한가롭게 산책을 즐기며 여수 밤바다를 감상할 수 있게 되었다.",
     reward_text: null,
     reward_effect: null,
     next_hint_text:
@@ -126,12 +126,12 @@ const gameData = [
     npc_dialogue: null,
     quiz_question: "'여수 평화의소녀상'이 설치된 장소는 어디인가요?",
     quiz_option1: "A. 영웅의길",
-    quiz_option2: "B. 평화광장",
-    quiz_option3: "C. 종포해양공원",
-    quiz_answer: "C. 종포해양공원",
+    quiz_option2: "B. 해양공원 내 평화광장",
+    quiz_option3: "C. 이순신공원",
+    quiz_answer: "B. 여수해양공원 내 평화광장",
     quiz_difficulty: "중",
     culture_info:
-      "전라남도 여수시 중앙동 종포해양공원에 시민들이 건립 기금을 모아 세운 소녀상이다. 여수 평화의 소녀상 바로 뒤에 소녀상 평화비와 더불어 지역 시인들의 시작품이 반원형으로 배치되어 있으며, 제막식은 2017년 3월 1일 치러졌다.",
+      "전라남도 여수시 중앙동 이순신광장 내 평화광장에 시민들이 건립 기금을 모아 세운 소녀상이다. 여수 평화의 소녀상 바로 뒤에 소녀상 평화비와 더불어 지역 시인들의 시작품이 반원형으로 배치되어 있으며, 제막식은 2017년 3월 1일 치러졌다.",
     reward_text: null,
     reward_effect: null,
     next_hint_text:
@@ -152,7 +152,7 @@ const gameData = [
     npc_dialogue: null,
     quiz_question: "해안로 건어물상가 시장의 주요 취급 품목은 무엇인가요?",
     quiz_option1: "A. 건어물",
-    quiz_option2: "B. 수산물",
+    quiz_option2: "B. 공산품",
     quiz_option3: "C. 농산물",
     quiz_answer: "A. 건어물",
     quiz_difficulty: "하",
